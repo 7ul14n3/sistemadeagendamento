@@ -1,70 +1,51 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reserva de Sala</title>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
 </head>
 <body>
-  <header>
-    <h1 id="titulo-pagina">Formulário de Reserva</h1>
-  </header>
 
-  <main>
-
-    <section id="secao-formulario">
-      <form id="form-reserva">
-        <fieldset>
-          <legend>Dados da Reserva</legend>
-
-          <label for="tipo-reserva">Tipo de Reserva:</label>
-          <select id="tipo-reserva" name="tipo-reserva" required>
-            <option value="">Selecione...</option>
-            <option value="individual">Individual</option>
-            <option value="grupo">Grupo</option>
-          </select>
-
-          <label for="sala">Sala:</label>
-          <input type="text" id="sala" name="sala" placeholder="Digite o nome ou número da sala" required>
-
-          <label for="data">Data:</label>
-          <input type="date" id="data" name="data" required>
-
-          <label for="horario">Horário:</label>
-          <input type="time" id="horario" name="horario" required>
-
-          <label for="materiais">Solicitação de Materiais:</label>
-          <textarea id="materiais" name="materiais" rows="3" placeholder="Liste os materiais necessários"></textarea>
-
-          <label for="finalidade">Finalidade:</label>
-          <input type="text" id="finalidade" name="finalidade" placeholder="Informe a finalidade da reserva">
-
-          <button type="submit" id="botao-enviar">Enviar Reserva</button>
-        </fieldset>
-      </form>
-    </section>
-
-    <section id="historico-agendamentos">
-      <h2>Histórico de Agendamentos</h2>
-      <div id="lista-agendamentos">
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <p>&copy; 2025 Sistema de Reservas</p>
-  </footer>
-
-  <div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-      <div class="vw-plugin-top-wrapper"></div>
+    <!-- Barra de Acessibilidade -->
+    <div style="padding: 10px; background-color: #eee; text-align: right;">
+        <button>A+ (Aumentar fonte)</button>
+        <button>A- (Diminuir fonte)</button>
+        <button>Contraste</button>
+        <button>Tema Claro/Escuro</button>
+        
     </div>
-  </div>
 
-  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  <script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-  </script>
+    
+    <div style="margin-top: 50px; text-align: center;">     <!-- Apagar pois faz parte do CSS -->
+        <h1>Inicio</h1>
+        <h1>Colocar uma imagem aqui :D </h1>
+
+        
+            <div style="margin-top: 20px;">    <!-- Apagar pois faz parte do CSS -->
+            <button type="button" onclick="window.location.href='login.html'">Login</button>
+            </div>
+        </form>
+    </div>
+
+
+
+    <footer>
+<br><br><br>
+        <center><p>Desenvolvido por discentes da UNEX</p></center>
+    </footer>
+    <!-- Início do VLibras -->
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
+    <!-- Fim do VLibras -->
+
 </body>
 </html>
