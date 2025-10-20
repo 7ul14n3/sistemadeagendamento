@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Reserva de Salas</title>
+    <!-- VLibras widget (acessibilidade) -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>Formulário de Reserva</h1>
+
+      <!-- Formulário de reserva -->
+      <form id="reserva-form" aria-labelledby="titulo-form">
+        <fieldset>
+          <legend id="titulo-form">Dados da Reserva</legend>
+
+          <!-- Tipo de reserva -->
+          <div>
+            <label for="tipo-reserva">Tipo de reserva</label>
+            <select id="tipo-reserva" name="tipoReserva" required>
+              <option value="">Selecione...</option>
+              <option value="aula">Aula</option>
+              <option value="reuniao">Reunião</option>
+              <option value="evento">Evento</option>
+            </select>
+          </div>
+
+          <!-- Sala -->
+          <div>
+            <label for="sala">Sala</label>
+            <select id="sala" name="sala" required>
+              <option value="">Selecione a sala...</option>
+            </select>
+          </div>
+
+          <!-- Calendário / Data -->
+          <div>
+            <label for="data">Data</label>
+            <input type="date" id="data" name="data" required />
+          </div>
+
+          <!-- Horários -->
+          <div>
+            <label for="hora-inicio">Horário início</label>
+            <input type="time" id="hora-inicio" name="horaInicio" required />
+          </div>
+          <div>
+            <label for="hora-fim">Horário fim</label>
+            <input type="time" id="hora-fim" name="horaFim" required />
+          </div>
+
+          <!-- Solicitação de materiais -->
+          <div>
+            <label for="materiais">Solicitação de materiais</label>
+            <textarea id="materiais" name="materiais" rows="3" placeholder="Descreva os materiais necessários (ex: projetor, microfone)"></textarea>
+          </div>
+
+          <!-- Finalidade (novo campo) -->
+          <div>
+            <label for="finalidade">Finalidade</label>
+            <input type="text" id="finalidade" name="finalidade" placeholder="Descreva a finalidade da reserva" required />
+          </div>
+
+          <!-- Botões -->
+          <div>
+            <button type="submit" id="btn-submit">Salvar reserva</button>
+            <button type="reset" id="btn-reset">Limpar</button>
+          </div>
+        </fieldset>
+      </form>
+
+      <!-- Seção para histórico de agendamentos -->
+      <section id="historico" aria-labelledby="historico-titulo">
+        <h2 id="historico-titulo">Histórico de Agendamentos</h2>
+        <!-- Conteúdo será populado dinamicamente -->
+        <div id="historico-lista" role="region" aria-live="polite">
+          <!-- Lista vazia inicialmente -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Inicializa VLibras -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        if (window.VLibras) {
+          new window.VLibras.Widget('https://vlibras.gov.br/app');
+        }
+      });
+    </script>
+  </body>
+</html>
