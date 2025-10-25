@@ -1,92 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Reserva de Salas</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserva de Sala</title>
+</head>
+<body>
+  <header>
+    <h1 id="titulo-pagina">Formulário de Reserva</h1>
+  </header>
 
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-  </head>
-  <body>
-    <main>
-      <h1>Formulário de Reserva</h1>
+  <main>
 
-     
-      <form id="reserva-form" aria-labelledby="titulo-form">
+    <section id="secao-formulario">
+      <form id="form-reserva">
         <fieldset>
-          <legend id="titulo-form">Dados da Reserva</legend>
+          <legend>Dados da Reserva</legend>
 
-          
-          <div>
-            <label for="tipo-reserva">Tipo de reserva</label>
-            <select id="tipo-reserva" name="tipoReserva" required>
-              <option value="">Selecione...</option>
-              <option value="aula">Aula</option>
-              <option value="reuniao">Reunião</option>
-              <option value="evento">Evento</option>
-            </select>
-          </div>
+          <label for="tipo-reserva">Tipo de Reserva:</label>
+          <select id="tipo-reserva" name="tipo-reserva" required>
+            <option value="">Selecione...</option>
+            <option value="Auditório - Sede">Auditório - Sede</option>
+            <option value="Laboratório de Informática - Sede">Laboratório de Informática - Sede</option>
+            <option value="Laboratório de Informática - Medicina">Laboratório de Informática - Medicina</option>
+          </select>
 
-          <div>
-            <label for="sala">Sala</label>
-            <select id="sala" name="sala" required>
-              <option value="">Selecione a sala...</option>
-            </select>
-          </div>
+          <label for="sala">Sala:</label>
+          <input type="text" id="sala" name="sala" placeholder="Digite o nome ou número da sala" required>
 
-        
-          <div>
-            <label for="data">Data</label>
-            <input type="date" id="data" name="data" required />
-          </div>
+          <label for="data">Data:</label>
+          <input type="date" id="data" name="data" required>
 
-          
-          <div>
-            <label for="hora-inicio">Horário início</label>
-            <input type="time" id="hora-inicio" name="horaInicio" required />
-          </div>
-          <div>
-            <label for="hora-fim">Horário fim</label>
-            <input type="time" id="hora-fim" name="horaFim" required />
-          </div>
+          <label for="horario">Horário:</label>
+          <input type="time" id="horario" name="horario" required>
 
-         
-          <div>
-            <label for="materiais">Solicitação de materiais</label>
-            <textarea id="materiais" name="materiais" rows="3" placeholder="Descreva os materiais necessários (ex: projetor, microfone)"></textarea>
-          </div>
+          <label for="materiais">Solicitação de Materiais:</label>
+          <textarea id="materiais" name="materiais" rows="3" placeholder="Liste os materiais necessários"></textarea>
 
-        
-          <div>
-            <label for="finalidade">Finalidade</label>
-            <input type="text" id="finalidade" name="finalidade" placeholder="Descreva a finalidade da reserva" required />
-          </div>
+          <label for="finalidade">Finalidade:</label>
+          <input type="text" id="finalidade" name="finalidade" placeholder="Informe a finalidade da reserva">
 
-      
-          <div>
-            <button type="submit" id="btn-submit">Salvar reserva</button>
-            <button type="reset" id="btn-reset">Limpar</button>
-          </div>
+          <button type="submit" id="botao-enviar">Enviar Reserva</button>
         </fieldset>
       </form>
+    </section>
 
-  
-      <section id="historico" aria-labelledby="historico-titulo">
-        <h2 id="historico-titulo">Histórico de Agendamentos</h2>
-      
-        <div id="historico-lista" role="region" aria-live="polite">
-          
-        </div>
-      </section>
-    </main>
+    <section id="historico-agendamentos">
+      <h2>Histórico de Agendamentos</h2>
+      <div id="lista-agendamentos">
+      </div>
+    </section>
+  </main>
 
- 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        if (window.VLibras) {
-          new window.VLibras.Widget('https://vlibras.gov.br/app');
-        }
-      });
-    </script>
-  </body>
+  <footer>
+    <p>&copy; 2025 Sistema de Reservas</p>
+  </footer>
+
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+</body>
+<script src="reserva.js"></script>
 </html>
