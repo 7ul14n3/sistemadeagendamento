@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Painel Admin - Gerenciamento de Agendamentos</title>
+    
+    <script src="https://vlibras.gov.br/widget/vlibras.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Gerenciamento de Agendamentos de Laboratórios</h1>
+    </header>
+
+    <main>
+
+        <section id="secao-filtro">
+            <h2>Filtrar Agendamentos</h2>
+            
+            <div>
+                <label for="campo-data-filtro">Filtrar por Data:</label>
+                <input type="date" id="campo-data-filtro">
+                
+                <button id="btn-filtrar">Filtrar</button>
+            </div>
+        </section>
+
+        <section id="secao-tabela">
+            <h2>Agendamentos Encontrados</h2>
+
+            <table id="tabela-agendamentos">
+                
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Sala</th>
+                        <th>Data/Hora</th>
+                        <th>Finalidade</th>
+                        <th>Solicitações</th>
+                        <th>Observação</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="corpo-tabela-dados">
+                    <tr>
+                        <td>[Exemplo: Nome Aluno]</td>
+                        <td>[Exemplo: Tipo de Agendamento]</td>
+                        <td>[Exemplo: Sala X]</td>
+                        <td>[Exemplo: 01/01/2026 10:00]</td>
+                        <td>[Exemplo: Finalidade]</td>
+                        <td>[Exemplo: Solicitações Específicas]</td>
+                        <td>[Exemplo: Observação]</td>
+                        <td>[Exemplo: Status]</td>
+                        <td>[Botões de Ação]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - Sistema de Agendamentos.</p>
+    </footer>
+
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/widget');
+    </script>
+</body>
+
+</html>
