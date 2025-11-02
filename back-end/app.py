@@ -1,7 +1,7 @@
 # backend/app.py
 import os # Para lidar com variáveis de ambiente
 from flask import Flask # Serve para criar a aplicação web
-from flask import request, jsonify   # Para futuras rotas de API, serve para lidar com requisições e respostas JSON
+from flask import request, jsonify  # Para futuras rotas de API, serve para lidar com requisições e respostas JSON
 from flask_sqlalchemy import SQLAlchemy # Serve para interagir com o banco de dados
 from flask_migrate import Migrate # Serve para gerenciar migrações do banco de dados
 from dotenv import load_dotenv # Para carregar variáveis de ambiente do arquivo .env
@@ -28,7 +28,7 @@ migrate = Migrate(app, db)
 # Tabela para os dados do DOCENTE
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(120), nullable=False)           # 'nome do docente'
+    nome = db.Column(db.String(120), nullable=False)          # 'nome do docente'
     matricula = db.Column(db.String(50), unique=True, nullable=False) # 'código do docente (Matricula)'
     email = db.Column(db.String(120), unique=True, nullable=False)   # 'e-mail institucional'
     senha_hash = db.Column(db.String(256), nullable=False)         # 'senha (cpf)' - Vamos guardar ela criptografada
@@ -59,6 +59,7 @@ def index():
 
 @app.route('/cadastro', methods=['POST']) # Rota para cadastrar um novo usuário (docente) e receber e enviar dados via POST
 def cadastrar_usuario():
+    # ... (O código de cadastro não muda e está perfeito como está) ...
     # 1. Pega os dados que o JavaScript enviou (em formato JSON)
     dados = request.get_json() # Espera um JSON com 'nome', 'matricula', 'email', 'senha'
 
@@ -99,8 +100,10 @@ def cadastrar_usuario():
         db.session.rollback()
         return jsonify({'status': 'erro', 'mensagem': f'Erro ao salvar no banco: {str(e)}'}), 500
 
+
 @app.route('/login', methods=['POST']) # Rota para fazer login do usuário (docente)
 def login_usuario():
+    # ... (O código de login não muda e está perfeito como está) ...
     # 1. Pega os dados que o JavaScript enviou (em formato JSON)
     dados = request.get_json() # Espera um JSON com 'email' e 'senha'
 
@@ -127,7 +130,7 @@ def login_usuario():
         'id': usuario.id,
         'nome': usuario.nome,
         'matricula': usuario.matricula,
-        'email': usuario.email
+        'email': usuario.email # <--- Importante: já estamos enviando o e-mail!
     }}), 200
 
 # --- API DE AGENDAMENTO ---
@@ -140,48 +143,47 @@ def reservar_horario():
     tipo_reserva = dados.get('tipo_reserva')
     sala = dados.get('sala')
     data = dados.get('data')
-    horario_inicio_novo = dados.get('horario_inicio') # Ex: "14:00"
-    horario_fim_novo = dados.get('horario_fim')     # Ex: "16:00"
+    horario_inicio_novo = dados.get('horario_inicio')
+    horario_fim_novo = dados.get('horario_fim')
     finalidade = dados.get('finalidade')
     solicitacoes = dados.get('solicitacoes')
-    matricula_usuario_logado = dados.get('matricula_usuario')
+    email_usuario_logado = dados.get('email_usuario') # <-- MUDANÇA AQUI: Esperamos o e-mail
 
     # 3. Validação dos dados (verificando se os campos principais vieram)
-    if not all([tipo_reserva, data, horario_inicio_novo, horario_fim_novo, finalidade, matricula_usuario_logado]):
+    # <-- MUDANÇA AQUI: Verificamos o e-mail
+    if not all([tipo_reserva, data, horario_inicio_novo, horario_fim_novo, finalidade, email_usuario_logado]):
         return jsonify({'status': 'erro', 'mensagem': 'Dados incompletos para a reserva!'}), 400
 
-    # 4. Encontra o usuário no banco de dados
-    usuario = Usuario.query.filter_by(matricula=matricula_usuario_logado).first()
+    # 4. Encontra o usuário no banco de dados PELO E-MAIL
+    # <-- MUDANÇA AQUI: Buscamos por e-mail, não matrícula
+    usuario = Usuario.query.filter_by(email=email_usuario_logado).first()
     if not usuario:
         return jsonify({'status': 'erro', 'mensagem': 'Usuário não encontrado!'}), 401
 
-    # --- INÍCIO DA NOVA LÓGICA DE CONFLITO ---
+    # --- INÍCIO DA LÓGICA DE CONFLITO ---
     # 5. Busca TODOS os agendamentos que já existem para aquela sala, naquele dia.
-    #    (Se for auditório, a 'sala' pode ser nula, então filtramos pelo tipo_reserva)
     query_filtro = [Agendamento.data == data]
     if sala:
         query_filtro.append(Agendamento.sala == sala) # Filtra pela sala específica
     else:
         query_filtro.append(Agendamento.tipo_reserva == tipo_reserva) # Filtra pelo tipo de reserva (ex: Auditório)
 
-    agendamentos_existentes = Agendamento.query.filter(*query_filtro).all() # Pega todos os agendamentos que batem com os filtros
+    agendamentos_existentes = Agendamento.query.filter(*query_filtro).all()
 
     # 6. Verifica se o novo horário bate com algum agendamento existente
-    for ag_existente in agendamentos_existentes: # Para cada agendamento já existente naquele dia e sala
-        # Verifica se há conflito de horários
+    for ag_existente in agendamentos_existentes:
         conflito = (horario_inicio_novo < ag_existente.horario_fim) and \
-                   (horario_fim_novo > ag_existente.horario_inicio) # Conflito se os horários se sobrepõem
+                   (horario_fim_novo > ag_existente.horario_inicio)
         
         if conflito:
-            # Se encontrou UM conflito, para tudo e avisa o usuário
             return jsonify({
                 'status': 'erro', 
                 'mensagem': f'Conflito de horário! A sala já está reservada das {ag_existente.horario_inicio} às {ag_existente.horario_fim}.'
-            }), 409 # 409 = Conflito
+            }), 409
 
     # --- FIM DA NOVA LÓGICA DE CONFLITO ---
 
-    # 7. Cria o novo agendamento com os dados (só se passou pela verificação)
+    # 7. Cria o novo agendamento com os dados
     novo_agendamento = Agendamento(
         usuario_id=usuario.id,
         tipo_reserva=tipo_reserva,
@@ -209,21 +211,17 @@ def reservar_horario():
 # --- Rota para o Calendário (Buscar horários ocupados por DATA) ---
 @app.route('/agendamentos/<string:data>', methods=['GET'])
 def get_agendamentos_por_data(data):
-    # O <string:data> na URL se conecta perfeitamente com o 'data' aqui
+    # ... (O código desta rota não muda e está perfeito como está) ...
     try:
-        # Busca no banco todos os agendamentos PARA AQUELA DATA
         agendamentos_do_dia = Agendamento.query.filter_by(data=data).all()
-
-        # Cria uma lista apenas com os horários de início e fim
         horarios_ocupados = []
         for ag in agendamentos_do_dia:
             horarios_ocupados.append({
                 'inicio': ag.horario_inicio,
                 'fim': ag.horario_fim,
-                'sala': ag.sala # Adicionei a sala, pode ser útil!
+                'sala': ag.sala
             })
         
-        # Retorna a lista em formato JSON
         return jsonify(horarios_ocupados), 200
 
     except Exception as e:
@@ -231,19 +229,19 @@ def get_agendamentos_por_data(data):
         
         
 #--- Rota para Historico de Agendamentos pessoal do Usuário ---
-@app.route('/meus-agendamentos/<string:matricula>', methods=['GET'])
-def get_meus_agendamentos(matricula):
-    # 1. O <string:matricula> na URL pega a matrícula do usuário
-
+# <-- MUDANÇA AQUI: A URL agora espera um e-mail
+@app.route('/meus-agendamentos/<string:email>', methods=['GET'])
+def get_meus_agendamentos(email): # <-- MUDANÇA AQUI: O parâmetro é o e-mail
+    
     try:
-        # 2. Primeiro, encontramos o usuário pela matrícula
-        usuario = Usuario.query.filter_by(matricula=matricula).first() #first retorna o primeiro resultado encontrado ou None se não encontrar
+        # 2. Primeiro, encontramos o usuário PELO E-MAIL
+        # <-- MUDANÇA AQUI: Buscamos por e-mail
+        usuario = Usuario.query.filter_by(email=email).first() 
 
         if not usuario:
             return jsonify({'status': 'erro', 'mensagem': 'Usuário não encontrado!'}), 404
 
         # 3. Se encontrou o usuário, buscamos os agendamentos ligados a ele
-        #    O "order_by(Agendamento.data.desc())" ordena do mais novo para o mais antigo
         agendamentos_do_usuario = Agendamento.query.filter_by(usuario_id=usuario.id).order_by(Agendamento.data.desc()).all()
 
         # 4. Formata os dados para enviar como JSON
@@ -272,30 +270,24 @@ def get_meus_agendamentos(matricula):
 # --- API DO PAINEL DO ADMINISTRADOR ---
 @app.route('/admin/agendamentos', methods=['GET'])
 def get_todos_agendamentos():
-    # 1. Verifica se o JavaScript enviou um filtro de data na URL
-    # Ex: /admin/agendamentos?data=2025-10-25
+    # ... (O código desta rota não muda e está perfeito como está) ...
+    # (Ainda é útil para o admin ver a matrícula e o e-mail)
     data_filtro = request.args.get('data')
 
     try:
-        # 2. Começa a construir a consulta ao banco
         query = Agendamento.query
-
-        # 3. Se o filtro de data existir, adiciona ele na consulta
         if data_filtro:
             query = query.filter_by(data=data_filtro)
 
-        # 4. Executa a consulta e ordena pela data mais recente
         agendamentos = query.order_by(Agendamento.data.desc()).all()
 
-        # 5. Formata a lista para enviar como JSON
-        #    Desta vez, vamos incluir o NOME do usuário em cada agendamento
-        #    Graças ao `db.relationship` que definimos, isso é fácil!
         lista_de_agendamentos = []
         for ag in agendamentos:
             lista_de_agendamentos.append({
                 'id': ag.id,
-                'nome_usuario': ag.usuario.nome, # A MÁGICA: Acessando o nome do usuário
-                'matricula_usuario': ag.usuario.matricula, # Bônus
+                'nome_usuario': ag.usuario.nome,
+                'matricula_usuario': ag.usuario.matricula,
+                'email_usuario': ag.usuario.email, # <-- BÔNUS: Adicionei o e-mail aqui também para o admin
                 'tipo_reserva': ag.tipo_reserva,
                 'sala': ag.sala,
                 'data': ag.data,
@@ -306,7 +298,7 @@ def get_todos_agendamentos():
                 'status': ag.status,
                 'observacao_admin': ag.observacao_admin
             })
-
+        
         return jsonify(lista_de_agendamentos), 200
 
     except Exception as e:
@@ -315,9 +307,7 @@ def get_todos_agendamentos():
 #--- Rota para atualizar o status de um agendamento ---
 @app.route('/admin/agendamentos/<int:id>/status', methods=['PUT'])
 def atualizar_status_agendamento(id):
-    # 1. O <int:id> na URL pega o ID específico do agendamento que queremos mudar
-
-    # 2. Pega os dados que o JavaScript enviou (o novo status)
+    # ... (O código desta rota não muda e está perfeito como está) ...
     dados = request.get_json()
     novo_status = dados.get('status')
     observacao = dados.get('observacao_admin')
@@ -326,22 +316,17 @@ def atualizar_status_agendamento(id):
         return jsonify({'status': 'erro', 'mensagem': 'Novo status é obrigatório!'}), 400
 
     try:
-        # 3. Encontra o agendamento exato no banco pelo ID
-        #    .query.get() é a forma mais rápida de buscar por ID (chave primária)
         agendamento = Agendamento.query.get(id)
 
         if not agendamento:
             return jsonify({'status': 'erro', 'mensagem': 'Agendamento não encontrado!'}), 404
 
-        # 4. Atualiza os campos do agendamento
         agendamento.status = novo_status
-        if observacao: # Só atualiza a observação se ela foi enviada
+        if observacao: 
             agendamento.observacao_admin = observacao
 
-        # 5. Salva (comita) as mudanças no banco de dados
         db.session.commit()
 
-        # 6. Retorna uma mensagem de sucesso
         return jsonify({'status': 'sucesso', 'mensagem': 'Status do agendamento atualizado com sucesso!'}), 200
 
     except Exception as e:
