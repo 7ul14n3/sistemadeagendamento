@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Página de Login</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- Barra de Acessibilidade -->
-    <div style="padding: 10px; background-color: #eee; text-align: right;">   <!-- Apagar pois faz parte do CSS -->
-        <button>A+ (Aumentar fonte)</button>
-        <button>A- (Diminuir fonte)</button>
-        <button>Contraste</button>
-        <button>Tema Claro/Escuro</button>
-        
+    <div style="padding: 10px; background-color: #eee; text-align: right">
+      <!-- Apagar pois faz parte do CSS -->
+      <button>A+ (Aumentar fonte)</button>
+      <button>A- (Diminuir fonte)</button>
+      <button>Contraste</button>
+      <button>Tema Claro/Escuro</button>
     </div>
 
     <!-- Conteúdo Principal -->
-    <div style="margin-top: 50px; text-align: center;"> <!-- Apagar pois faz parte do CSS -->
-        <h1>Login</h1>
+    <div style="margin-top: 50px; text-align: center">
+      <!-- Apagar pois faz parte do CSS -->
+      <h1>Login</h1>
 
-        <form>
-            <div style="margin-bottom: 10px;"> <!-- Apagar pois faz parte do CSS -->
-                <label for="usuario">Usuário:</label><br>
-                <input type="text" id="usuario" name="usuario" required>
-            </div>
+      <form id="form-login">
+        <div style="margin-bottom: 10px">
+          <!-- Apagar pois faz parte do CSS -->
+          <label for="usuario">Usuário:</label><br />
+          <input type="text" id="usuario-email" name="usuario" required />
+        </div>
 
-            <div style="margin-bottom: 10px;">  <!-- Apagar pois faz parte do CSS -->
-                <label for="senha">Senha:</label><br>
-                <input type="password" id="senha" name="senha" required>
-            </div>
+        <div style="margin-bottom: 10px">
+          <!-- Apagar pois faz parte do CSS -->
+          <label for="senha">Senha:</label><br />
+          <input type="password" id="senha-login" name="senha" required />
+        </div>
 
-            <div style="margin-top: 20px;">  <!-- Apagar pois faz parte do CSS -->
-                <button type="submit">Login</button>
-                <button type="button" onclick="window.location.href='cadastro.html'">Cadastro</button>
-
-            </div>
-        </form>
+        <div style="margin-top: 20px">
+          <!-- Apagar pois faz parte do CSS -->
+          <button type="submit">Login</button>
+          <button type="button" onclick="window.location.href='cadastro.html'">
+            Cadastro
+          </button>
+        </div>
+      </form>
     </div>
 
-            <footer>
-               <center> <p>Desenvolvido por discentes da UNEX</p> </center>
-            </footer>
-
+    <footer>
+      <center><p>Desenvolvido por discentes da UNEX</p></center>
+    </footer>
 
     <!-- Início do VLibras -->
     <div vw class="enabled">
-        <div vw-access-button class="active"></div>
-        <div vw-plugin-wrapper>
-            <div class="vw-plugin-top-wrapper"></div>
-        </div>
+      <div vw-access-button class="active"></div>
+      <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+      </div>
     </div>
 
     <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
     <script>
-        new window.VLibras.Widget('https://vlibras.gov.br/app');
+      new window.VLibras.Widget("https://vlibras.gov.br/app");
     </script>
     <!-- Fim do VLibras -->
-
-
-</body>
+    <script src="js/acessibilidade.js"></script>
+    <script src="js/login.js"></script>
+  </body>
 </html>
