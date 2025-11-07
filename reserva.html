@@ -4,8 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reserva de Sala</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <div id="barra-acessibilidade">
+    <button id="aumentar-fonte">A+</button>
+    <button id="diminuir-fonte">A-</button>
+    <button id="alternar-contraste">Contraste</button>
+  </div>
+
   <header>
     <h1 id="titulo-pagina">Formulário de Reserva</h1>
   </header>
@@ -25,8 +33,13 @@
             <option value="Laboratório de Informática - Medicina">Laboratório de Informática - Medicina</option>
           </select>
 
-          <label for="sala">Sala:</label>
-          <input type="text" id="sala" name="sala" placeholder="Digite o nome ou número da sala" required>
+         <label for="sala">Sala:</label>
+          <select id="sala" name="sala" required>
+            <option value="">Selecione uma sala...</option>
+            <option value="Sala 1">Sala 1</option>
+            <option value="Sala 2">Sala 2</option>
+            <option value="Sala 3">Sala 3</option>
+            <option value="Sala 4">Sala 4</option>
 
           <label for="data">Data:</label>
           <input type="date" id="data" name="data" required>
