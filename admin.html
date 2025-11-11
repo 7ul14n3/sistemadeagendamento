@@ -4,12 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Painel Admin - Gerenciamento de Agendamentos</title>
+    <title>Painel do Administrador - Gerenciamento de Agendamentos</title>
     
-    <script src="https://vlibras.gov.br/widget/vlibras.js"></script>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
 </head>
 
-<body>
+<>
+      <!-- Barra de Acessibilidade -->
+    <div style="padding: 10px; background-color: #eee; text-align: right;">
+        <button>A+ (Aumentar fonte)</button>
+        <button>A- (Diminuir fonte)</button>
+        <button>Contraste</button>
+        <button>Tema Claro/Escuro</button>
+        
+    </div>
     <header>
         <h1>Gerenciamento de Agendamentos de Laboratórios</h1>
     </header>
@@ -48,8 +56,9 @@
 
                 <tbody id="corpo-tabela-dados">
                     <tr>
-                        <td>[Exemplo: Nome Aluno]</td>
+                        <td>[Exemplo: Nome Docente]</td>
                         <td>[Exemplo: Tipo de Agendamento]</td>
+                        <td>[Exemplo: Polo X]</td>
                         <td>[Exemplo: Sala X]</td>
                         <td>[Exemplo: 01/01/2026 10:00]</td>
                         <td>[Exemplo: Finalidade]</td>
@@ -67,6 +76,7 @@
     <footer>
         <p>&copy; 2025 - Sistema de Agendamentos.</p>
     </footer>
+    <!-- Início do VLibras -->
 
    <div vw class="enabled">
   <div vw-access-button class="active"></div>
@@ -75,11 +85,10 @@
   </div>
 </div>
 <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>
-  new window.VLibras.Widget('https://vlibras.gov.br/app');
+<script>    new window.VLibras.Widget('https://vlibras.gov.br/app');
+    
 </script>
-</body> 
-</html>
-</body>
+    <!-- Fim do VLibras -->
 
+</body>
 </html>
