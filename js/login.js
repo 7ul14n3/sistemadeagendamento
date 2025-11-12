@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () { //serve para que o j
             senha: senhaInput.value //Pega o valor do campo senha
         };
 
-        const urlApiLogin = 'http://127.0.0.1:5000/login'; // Constante com a URL do servidor + rota de login da API
+        const urlApiLogin = 'https://agenddev.onrender.com'; // Constante com a URL do servidor + rota de login da API
 
         fetch(urlApiLogin, { //Usamos o fetch para fazer a requisicao para a API
             method: 'POST', //Metodo POST para enviar dados

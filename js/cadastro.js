@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         // --- PASSO 5: Ligar para a API (O Fetch!) ---
-        const urlApiCadastro = 'http://127.0.0.1:5000/cadastro';
+        const urlApiCadastro = 'https://agenddev.onrender.com';
 
         const opcoesFetch = {
             method: 'POST',

@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const dataFiltroInput = document.getElementById('campo-data-filtro');
     const btnFiltrar = document.getElementById('btn-filtrar');
     const tabelaCorpo = document.getElementById('corpo-tabela-dados');
-    const API_URL = 'http://127.0.0.1:5000';
+    const API_URL = 'https://agenddev.onrender.com';
 
     // --- PASSO 3: FUNÇÃO PRINCIPAL PARA CARREGAR OS AGENDAMENTOS ---
     function carregarAgendamentos(dataFiltrada = '') {

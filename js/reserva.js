@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     tipoReservaSelect.addEventListener('change', gerenciarVisibilidadeSala); // "Ouvir" mudanças no tipo de reserva
 
     // URL base da nossa API (do 'flask run')
-    const API_URL = 'http://127.0.0.1:5000';
+    const API_URL = 'https://agenddev.onrender.com';
 
     // --- PASSO 3: CONFIGURAR O CALENDÁRIO (FLATPICKR) ---
 
