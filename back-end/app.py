@@ -7,6 +7,7 @@ from flask_migrate import Migrate # Serve para gerenciar migrações do banco de
 from dotenv import load_dotenv # Para carregar variáveis de ambiente do arquivo .env
 from flask_cors import CORS # Serve para lidar com CORS (Cross-Origin Resource Sharing), ou seja, permitir que o front-end acesse o back-end
 from werkzeug.security import generate_password_hash, check_password_hash # Para lidar com hash de senhas, ou seja, guardar senhas de forma segura
+from flask_mail import Mail, Message # Para enviar e-mails de foma gratuita.
 
 load_dotenv()
 app = Flask(__name__)
@@ -20,8 +21,19 @@ if db_url and db_url.startswith("postgres://"):
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
+# --- Configuração do Flask-Mail (para GMAIL) ---
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME") # Pega do .env
+app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD") # Pega do .env
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("MAIL_USERNAME")
+
+# Inicializa as ferramentas de email
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+mail = Mail(app) # Inicializa a ferramenta de email
 
 # --- Modelos (A "Planta Baixa" ATUALIZADA) ---
 
@@ -32,7 +44,7 @@ class Usuario(db.Model):
     matricula = db.Column(db.String(50), unique=True, nullable=False) # 'código do docente (Matricula)'
     email = db.Column(db.String(120), unique=True, nullable=False)   # 'e-mail institucional'
     senha_hash = db.Column(db.String(256), nullable=False)         # 'senha (cpf)' - Vamos guardar ela criptografada
-
+    tipo = db.Column(db.String(50), nullable=False, default='Docente', server_default='Docente') # 'tipo de usuário' (Docente ou Admin)
 # Tabela para os dados do AGENDAMENTO
 class Agendamento(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -126,20 +138,21 @@ def login_usuario():
         return jsonify({'status': 'erro', 'mensagem': 'Senha incorreta!'}), 401
 
     # 6. Se tudo estiver ok, envia uma resposta de sucesso
-    return jsonify({'status': 'sucesso', 'mensagem': 'Login realizado com sucesso!', 'usuario': {
-        'id': usuario.id,
-        'nome': usuario.nome,
-        'matricula': usuario.matricula,
-        'email': usuario.email # <--- Importante: já estamos enviando o e-mail!
-    }}), 200
+        # 6. Se tudo estiver ok, envia uma resposta de sucesso
+    return jsonify({'status': 'sucesso', 'mensagem': 'Login realizado com sucesso!', 'usuario': { 
+    'id': usuario.id,
+    'nome': usuario.nome,
+    'matricula': usuario.matricula,
+    'email': usuario.email,
+    'tipo': usuario.tipo  # <-- ADICIONE ESTA LINHA!
+}}), 200
 
 # --- API DE AGENDAMENTO ---
 @app.route('/reservar', methods=['POST'])
 def reservar_horario():
-    # 1. Pega os dados que o JavaScript vai enviar
     dados = request.get_json()
-
-    # 2. Desempacota todos os dados do formulário
+    
+    # Extrai os dados
     tipo_reserva = dados.get('tipo_reserva')
     sala = dados.get('sala')
     data = dados.get('data')
@@ -147,30 +160,26 @@ def reservar_horario():
     horario_fim_novo = dados.get('horario_fim')
     finalidade = dados.get('finalidade')
     solicitacoes = dados.get('solicitacoes')
-    email_usuario_logado = dados.get('email_usuario') # <-- MUDANÇA AQUI: Esperamos o e-mail
+    email_usuario_logado = dados.get('email_usuario')
 
-    # 3. Validação dos dados (verificando se os campos principais vieram)
-    # <-- MUDANÇA AQUI: Verificamos o e-mail
+    # Validação
     if not all([tipo_reserva, data, horario_inicio_novo, horario_fim_novo, finalidade, email_usuario_logado]):
         return jsonify({'status': 'erro', 'mensagem': 'Dados incompletos para a reserva!'}), 400
 
-    # 4. Encontra o usuário no banco de dados PELO E-MAIL
-    # <-- MUDANÇA AQUI: Buscamos por e-mail, não matrícula
+    # Encontra o usuário
     usuario = Usuario.query.filter_by(email=email_usuario_logado).first()
     if not usuario:
         return jsonify({'status': 'erro', 'mensagem': 'Usuário não encontrado!'}), 401
 
-    # --- INÍCIO DA LÓGICA DE CONFLITO ---
-    # 5. Busca TODOS os agendamentos que já existem para aquela sala, naquele dia.
+    # --- LÓGICA DE CONFLITO ---
     query_filtro = [Agendamento.data == data]
     if sala:
-        query_filtro.append(Agendamento.sala == sala) # Filtra pela sala específica
+        query_filtro.append(Agendamento.sala == sala)
     else:
-        query_filtro.append(Agendamento.tipo_reserva == tipo_reserva) # Filtra pelo tipo de reserva (ex: Auditório)
-
+        query_filtro.append(Agendamento.tipo_reserva == tipo_reserva)
+    
     agendamentos_existentes = Agendamento.query.filter(*query_filtro).all()
 
-    # 6. Verifica se o novo horário bate com algum agendamento existente
     for ag_existente in agendamentos_existentes:
         conflito = (horario_inicio_novo < ag_existente.horario_fim) and \
                    (horario_fim_novo > ag_existente.horario_inicio)
@@ -181,9 +190,9 @@ def reservar_horario():
                 'mensagem': f'Conflito de horário! A sala já está reservada das {ag_existente.horario_inicio} às {ag_existente.horario_fim}.'
             }), 409
 
-    # --- FIM DA NOVA LÓGICA DE CONFLITO ---
+    # --- FIM DO CONFLITO ---
 
-    # 7. Cria o novo agendamento com os dados
+    # Cria o agendamento
     novo_agendamento = Agendamento(
         usuario_id=usuario.id,
         tipo_reserva=tipo_reserva,
@@ -196,16 +205,41 @@ def reservar_horario():
         status='Agendado'
     )
 
-    # 8. Salva o novo agendamento no banco de dados
+    # Salva no banco e tenta enviar o e-mail
     try:
         db.session.add(novo_agendamento)
         db.session.commit()
-        # 9. Envia uma resposta de sucesso
+        
+        # --- ENVIO DE E-MAIL ---
+        try:
+            msg = Message(
+                subject=f"Confirmação de Reserva - {tipo_reserva}",
+                recipients=[usuario.email], # Envia para o email do docente que reservou
+                body=f"""
+                Olá, {usuario.nome}!
+
+                Sua reserva foi confirmada com sucesso.
+
+                Detalhes da Reserva:
+                - Local: {tipo_reserva}
+                - Sala: {sala or 'N/A'}
+                - Data: {data}
+                - Horário: {horario_inicio_novo} às {horario_fim_novo}
+                - Finalidade: {finalidade}
+
+                Obrigado por usar nosso sistema!
+                """
+            )
+            mail.send(msg)
+        except Exception as e:
+            print(f"ERRO AO ENVIAR E-MAIL: {str(e)}") # Loga o erro no terminal
+            # Não paramos o processo, a reserva foi feita.
+        # --- FIM DO E-MAIL ---
+
         return jsonify({'status': 'sucesso', 'mensagem': 'Reserva realizada com sucesso!'}), 201
     
     except Exception as e:
         db.session.rollback()
-        # 10. Em caso de erro ao salvar, avisa o usuário
         return jsonify({'status': 'erro', 'mensagem': f'Erro ao salvar no banco: {str(e)}'}), 500
     
 # --- Rota para o Calendário (Buscar horários ocupados por DATA) ---
