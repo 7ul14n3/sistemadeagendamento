@@ -1,4 +1,4 @@
-// login.js
+// js/login.js
 document.addEventListener('DOMContentLoaded', function () { //serve para que o js seja carregado depois do html
 
     const formLogin = document.getElementById('form-login'); //Pega o campo do formulario com id especifico
@@ -19,22 +19,33 @@ document.addEventListener('DOMContentLoaded', function () { //serve para que o j
         fetch(urlApiLogin, { //Usamos o fetch para fazer a requisicao para a API
             method: 'POST', //Metodo POST para enviar dados
             headers: { 'Content-Type': 'application/json' }, //Cabeçalhos indicando que o corpo da requisição é JSON
-            body: JSON.stringify(dadosParaEnviar) //Corpo da requisicao convertido para JSON; stringify converte o objeto em string JSON, ou seja, transforma o objeto em um formato que pode ser enviado pela rede
+            body: JSON.stringify(dadosParaEnviar) //Corpo da requisicao convertido para JSON
         })
-            .then(response => response.json()) //then serve para tratar a resposta da API, convertendo a resposta para JSON
-            .then(data => { //Aqui tratamos os dados recebidos da API
+            .then(response => response.json()) //Converte a resposta para JSON
+            .then(data => { //Aqui tratamos os dados retornados pela API
 
-                if (data.status === 'sucesso') { // Verifica se o status retornado é 'sucesso'
-                    // SUCESSO! (Aqui não mostramos nenhum alerta)
+                console.log('Resposta completa da API:', data); // Login completo da resposta
 
-                    // Apenas salvamos os dados do usuário no "cofre"
-                    localStorage.setItem('usuarioLogado', JSON.stringify(data.usuario)); // Armazenamos os dados do usuario no armazenamento local do navegador
+                if (data.status === 'sucesso') {
+                    // Salva os dados do usuário no "cofre"
+                    localStorage.setItem('usuarioLogado', JSON.stringify(data.usuario));
 
-                    // E redirecionamos imediatamente. Isso é a confirmação.
-                    window.location.href = 'reserva.html';
+                    // Redireciona com base no tipo de usuário
+                    // .trim() remove espaços em branco no início e no fim
+                    // .toLowerCase() converte tudo para minúsculo
+                    if (data.usuario.tipo.trim().toLowerCase() === 'admin') {
 
+                        // *** AQUI ESTÁ A CORREÇÃO QUE FALTAVA ***
+                        window.location.href = 'admin.html'; // Se for Admin, vai para o painel do admin
+
+                    } else {
+                        // Se for qualquer outra coisa (Docente), vai para a reserva
+                        window.location.href = 'reserva.html';
+                    }
+
+                    // *** ESTE 'else' ESTAVA NO LUGAR ERRADO ANTES ***
                 } else {
-                    // ERRO! (Aqui sim, mostramos o alerta)
+                    // Se o back-end deu erro (ex: senha errada)
                     alert('Erro no login: ' + data.mensagem); // Mostramos o erro retornado pela API
                 }
             })
