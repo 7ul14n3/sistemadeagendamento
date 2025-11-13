@@ -1,0 +1,60 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+/* Fonte de tudo */
+body {
+  font-family: 'Roboto', sans-serif !important;
+  background-color: #f8f9fa; 
+}
+
+
+.btn-primary {
+  background-color: #003366 !important;
+  border-color: #003366 !important;
+}
+
+/* Cor do botão secundário */
+.btn-secondary {
+  background-color: #168621 !important;
+  border-color: #f66504 !important;
+}
+
+
+.card {
+  border-top: 4px solid #003366 !important;
+}
+
+.barra-acessibilidade {
+  background-color: #003366 !important;
+}
+
+/* (Estilos dos botões da barra) */
+.barra-acessibilidade .btn-outline-light {
+  border-color: #12b11d;
+  color: #fafcfa;
+  margin-left: 3px;
+  border-radius: 20px;
+}
+
+.barra-acessibilidade .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #003366;
+}
+
+/* "Media Query" aplica os estilos abaixo
+  APENAS em telas pequenas (menores que 768px).
+*/
+@media (max-width: 767.98px) {
+
+
+  .barra-acessibilidade {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    flex-wrap: wrap;           /* PERMITE que os botões quebrem a linha */
+    gap: 5px;                  /* Adiciona um espaço entre os botões */
+  }
+  .barra-acessibilidade .btn-outline-light {
+    margin-left: 0;
+  }
+}
