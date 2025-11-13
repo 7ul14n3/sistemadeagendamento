@@ -3,29 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgendDev/title>
-</head>
-<body>
+    <title>Fazer Login</title>
 
-        <div style="padding: 10px; background-color: #eee; text-align: right;">
-        <button>A+ (Aumentar fonte)</button>
-        <button>A- (Diminuir fonte)</button>
-        <button>Contraste</button>
-        <button>Tema Claro/Escuro</button>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <link href="css/custom.css?v=1.1" rel="stylesheet" />
+</head>
+
+  <body class="bg-light">
+    <div class="barra-acessibilidade text-light p-2 text-end">
+      <button type.="button" class="btn btn-sm btn-outline-light me-2" onclick="window.location.href='index.html'">
+        INICIO
+      </button>
+      <button class="btn btn-sm btn-outline-light me-2">A+</button>
+      <button class="btn btn-sm btn-outline-light me-2">A-</button>
+      <button class="btn btn-sm btn-outline-light me-2">Contraste</button>
+      <button class="btn btn-sm btn-outline-light">Tema</button>
     </div>
 
+    <div class="container text-center py-5 mt-5">
+        
+        <h1 class="display-4 mb-4">Sistema de Agendamento</h1>
 
-    <div style="margin-top: 120px; text-align: center;">
-        <h1>Sistema de Agendamento</h1>
-        <img src="dowload/img.jpg" alt="Descrição curta e clara">
+        <img src="img/agenddev-logo.jpg" alt="Logo do Sistema de Agendamento" 
+             class="img-fluid rounded shadow-sm mb-4" style="max-width: 450px;">
 
-        <div style="margin-top: 20px;">
-            <button type="button" onclick="window.location.href='login.html'">Login</button>
+        <div class="mt-4">
+            <button type="button" class="btn btn-primary btn-lg px-5" onclick="window.location.href='front-end/login.html'">
+                Fazer Login
+            </button>
         </div>
     </div>
 
 
-    <footer style="text-align: center; margin-top: 12cm; font-size: 14px; color: #555;">
+    <footer class="mt-5 p-3 text-center text-muted">
         <p>Desenvolvido por discentes da UNEX</p>
         <p>AgendDev 2025 v1</p>
     </footer>
@@ -41,8 +57,5 @@
     <script>
         new window.VLibras.Widget('https://vlibras.gov.br/app');
     </script>
-    <!-- Fim do VLibras -->
-
-</body>
+    </body>
 </html>
-
