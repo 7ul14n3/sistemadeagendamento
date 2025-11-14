@@ -1,78 +1,81 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Painel Admin - Gerenciamento</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-  </head>
 
-  <body>
-    <div id="barra-acessibilidade">
-      <button id="aumentar-fonte">A+</button>
-      <button id="diminuir-fonte">A-</button>
-      <button id="alternar-contraste">Tema claro/escuro</button>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin - Gerenciamento</title>
+  <link href="css/custom.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <header>
-      <h1>Gerenciamento de Agendamentos</h1>
-    </header>
+</head>
 
-    <main>
-      <section id="secao-filtro">
-        <h2>Filtrar Agendamentos</h2>
-        <div>
-          <label for="campo-data-filtro">Filtrar por Data:</label>
-          <input type="date" id="campo-data-filtro" />
-          <button id="btn-filtrar">Filtrar</button>
+<body>
+  <div id="barra-acessibilidade">
+    <button type="button" class="btn btn-sm btn-outline-light me-2"
+      onclick="window.location.href='index.html'">INICIO</button>
+    <button id="aumentar-fonte">A+</button>
+    <button id="diminuir-fonte">A-</button>
+    <button id="alternar-contraste"><i class="bi bi-circle-half"></i></button>
+  </div>
 
-          <a href="cadastro.html" class="btn btn-success">
-            <i class="bi bi-person-plus-fill"></i>
-          </a>
-        </div>
-      </section>
+  <header>
+    <h1>Gerenciamento de Agendamentos</h1>
+  </header>
 
-      <section id="secao-tabela">
-        <h2>Agendamentos Encontrados</h2>
-        <table id="tabela-agendamentos">
-          <thead>
-            <tr>
-              <th>Nome (E-mail)</th>
-              <th>Tipo</th>
-              <th>Sala</th>
-              <th>Data/Hora</th>
-              <th>Finalidade</th>
-              <th>Solicitações</th>
-              <th>Observação</th>
-              <th>Status</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="corpo-tabela-dados"></tbody>
-        </table>
-      </section>
-    </main>
+  <main>
+    <section id="secao-filtro">
+      <h2>Filtrar Agendamentos</h2>
+      <div>
+        <label for="campo-data-filtro">Filtrar por Data:</label>
+        <input type="date" id="campo-data-filtro" />
+        <button id="btn-filtrar">Filtrar</button>
 
-    <footer>
-      <p>&copy; 2025 - Sistema de Agendamentos.</p>
-    </footer>
-
-    <div vw class="enabled">
-      <div vw-access-button class="active"></div>
-      <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
+        <a href="cadastro.html" class="btn btn-success">
+          <i class="bi bi-person-plus-fill"></i>
+        </a>
       </div>
-    </div>
+    </section>
 
-    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-    <script>
-      new window.VLibras.Widget("https://vlibras.gov.br/app");
-    </script>
-    <script src="js/acessibilidade.js"></script>
-    <script src="js/admin.js"></script>
-  </body>
+    <section id="secao-tabela">
+      <h2>Agendamentos Encontrados</h2>
+      <table id="tabela-agendamentos">
+        <thead>
+          <tr>
+            <th>Nome (E-mail)</th>
+            <th>Tipo</th>
+            <th>Sala</th>
+            <th>Data/Hora</th>
+            <th>Finalidade</th>
+            <th>Solicitações</th>
+            <th>Observação</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="corpo-tabela-dados"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Sistema de Agendamentos.</p>
+  </footer>
+
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget("https://vlibras.gov.br/app");
+  </script>
+  <script src="../js/acessibilidade.js"></script>
+  <script src="../js/admin.js"></script>
+</body>
+
 </html>

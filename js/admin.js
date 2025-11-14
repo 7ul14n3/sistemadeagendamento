@@ -1,6 +1,10 @@
 // js/admin.js
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Se o formulário de admin não está nesta página, para o script
+    const tabelaCorpo = document.getElementById('corpo-tabela-dados');
+    if (!tabelaCorpo) return;
+
     // --- PASSO 1: SEGURANÇA! VERIFICAR SE O USUÁRIO É ADMIN ---
     const dadosUsuarioString = localStorage.getItem('usuarioLogado');
     let usuarioLogado = null;
@@ -9,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
         usuarioLogado = JSON.parse(dadosUsuarioString);
     }
 
-    // Se não tem usuário logado, OU se o tipo NÃO é 'Admin', expulsa da página
     if (!usuarioLogado || usuarioLogado.tipo.trim().toLowerCase() !== 'admin') {
         alert('Acesso negado. Esta é uma área restrita para administradores.');
         window.location.href = 'login.html';
@@ -19,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- PASSO 2: PEGAR REFERÊNCIAS DOS ELEMENTOS DO HTML ---
     const dataFiltroInput = document.getElementById('campo-data-filtro');
     const btnFiltrar = document.getElementById('btn-filtrar');
-    const tabelaCorpo = document.getElementById('corpo-tabela-dados');
     const API_URL = 'https://agenddev.onrender.com';
 
     // --- PASSO 3: FUNÇÃO PRINCIPAL PARA CARREGAR OS AGENDAMENTOS ---
@@ -44,10 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // --- PASSO 4: "DESENHAR" A TABELA ---
                 agendamentos.forEach(ag => {
                     const tr = document.createElement('tr');
-
-                    // Define o estilo da linha com base no status
                     tr.className = `status-linha-${ag.status.toLowerCase()}`;
-
                     tr.innerHTML = `
                         <td>${ag.nome_usuario} (${ag.email_usuario})</td>
                         <td>${ag.tipo_reserva}</td>
@@ -92,9 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Se o botão clicado foi o de FINALIZAR
         if (elementoClicado.classList.contains('btn-finalizar')) {
             let obs = prompt("Adicionar observação (ex: 'Projetor quebrou')? (Opcional)");
-            // Se o admin clicou "Cancelar" no prompt, 'obs' será 'null'.
-            // Enviamos 'Finalizado' mesmo assim.
-            atualizarStatus(idAgendamento, 'Finalizado', obs || ''); // Envia '' se for nulo
+            atualizarStatus(idAgendamento, 'Finalizado', obs || '');
         }
     });
 
@@ -112,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                 if (data.status === 'sucesso') {
                     alert(data.mensagem);
-                    // Atualiza a tabela para mostrar o novo status
                     carregarAgendamentos(dataFiltroInput.value);
                 } else {
                     alert('Erro ao atualizar status: ' + data.mensagem);
@@ -122,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- PASSO 8: INICIALIZAÇÃO DA PÁGINA ---
-    // Carrega todos os agendamentos assim que a página é aberta
     carregarAgendamentos();
 
 });

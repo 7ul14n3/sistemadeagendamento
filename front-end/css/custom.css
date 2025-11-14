@@ -1,13 +1,11 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 
 /* Fonte de tudo */
 body {
   font-family: 'Roboto', sans-serif !important;
-  background-color: #f8f9fa; 
+  background-color: #f8f9fa;
 }
-
 
 .btn-primary {
   background-color: #003366 !important;
@@ -22,6 +20,7 @@ body {
 
 
 .card {
+  /*faz o "card" ter a borda superior azul escuro */
   border-top: 4px solid #003366 !important;
 }
 
@@ -50,11 +49,157 @@ body {
 
   .barra-acessibilidade {
     display: flex;
-    justify-content: flex-end; /* Alinha os botões à direita */
-    flex-wrap: wrap;           /* PERMITE que os botões quebrem a linha */
-    gap: 5px;                  /* Adiciona um espaço entre os botões */
+    justify-content: flex-end;
+    /* Alinha os botões à direita */
+    flex-wrap: wrap;
+    /* PERMITE que os botões quebrem a linha */
+    gap: 5px;
+    /* Adiciona um espaço entre os botões */
   }
+
   .barra-acessibilidade .btn-outline-light {
     margin-left: 0;
   }
+}
+
+/*-------------------------------CADASTRO LINK-------------------------------------------------- */
+
+.registrer-link {
+  /* Contêiner do link de cadastro */
+  text-align: center;
+  margin-top: 30px;
+  color: #101010;
+}
+
+.registrer-link a {
+  /* Estilo do link dentro de .registrer-link*/
+  color: #003366;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.registrer-link a:hover {
+  /*fazer efeito hover no link de cadastro*/
+  /* Efeito hover para o link */
+  color: #82b0de;
+  text-decoration: underline;
+}
+
+.input-senha {
+  /* Contêiner do input de senha */
+  position: relative;
+}
+
+/*-------------------------------------ICONES DENTRO DOS INPUTS----------------------------------------*/
+
+.mb-3,
+.input-senha {
+  /* Contêineres dos inputs */
+  position: relative;
+}
+
+.mb-3 label i,
+.input-senha label i {
+  /* Ícones dentro dos labels */
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #6c757d;
+}
+
+.mb-3 input,
+.input-senha input {
+  /* Espaço para o ícone */
+  padding-right: 2.5rem;
+  /* espaço para o ícone */
+}
+
+input::placeholder {
+  /* Estilo do placeholder */
+  font-style: italic;
+}
+
+/* ---------------------------------- REGRAS DE ACESSIBILIDADE ----------------------------------------- */
+
+/* Regra 1: Fundo e Cor Padrão */
+body.alto-contraste {
+  background-color: #111111 !important;
+  color: #E5E5E5 !important;
+  /* Texto branco */
+}
+
+body.alto-contraste h1 {
+  color: #fcfcfc !important;
+}
+
+body.alto-contraste p {
+  color: #FFFFFF !important;
+}
+
+/* Regra 2: Rótulos de Formulário (O principal problema) */
+body.alto-contraste .form-label {
+  color: #FFF !important;
+  /* Força os rótulos a serem brancos */
+}
+
+body.alto-contraste i {
+  color: #fefefe !important;
+}
+
+/* Regra 3: Links */
+body.alto-contraste a {
+  color: #FFFF00 !important;
+  /* Links em amarelo brilhante */
+}
+
+/* Regra 4: "Cards" e "Containers" */
+body.alto-contraste .card {
+  background-color: #111 !important;
+  /* Um cinza bem escuro */
+  border-color: #FFFF00 !important;
+  /* Borda amarela */
+}
+
+/* Regra 5: Campos de Input e Botões */
+body.alto-contraste .form-control,
+body.alto-contraste .form-select,
+body.alto-contraste .btn {
+  background-color: #222 !important;
+  color: #FFF !important;
+  border: 1px solid #FFFF00 !important;
+}
+
+/* Regra 6: Cor do texto do placeholder (ex: "seu.email@exemplo.com") */
+body.alto-contraste .form-control::placeholder {
+  color: #BBB !important;
+}
+
+/* Regra 7: Botão Primário (Login) */
+body.alto-contraste .btn-primary {
+  background-color: #000 !important;
+  border-color: #FFFF00 !important;
+  color: #ffffff !important;
+  /* Texto do botão amarelo */
+}
+
+/* Regra 8: Link de Cadastro */
+body.alto-contraste .registrer-link a {
+  color: #ffffff !important;
+  /* Verde brilhante para se destacar */
+}
+
+/* --- TAMANHO DA FONTE --- */
+/* (Estas regras permanecem as mesmas) */
+body.fonte-normal {
+  font-size: 16px;
+}
+
+body.fonte-media {
+  font-size: 20px;
+}
+
+body.fonte-grande {
+  font-size: 30px;
 }

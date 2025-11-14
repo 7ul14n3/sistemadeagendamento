@@ -1,9 +1,12 @@
-// js/login.js
+// js/login.js (Corrigido)
 document.addEventListener('DOMContentLoaded', function () { //serve para que o js seja carregado depois do html
 
     const formLogin = document.getElementById('form-login'); //Pega o campo do formulario com id especifico
     const emailInput = document.getElementById('usuario-email');//Pega o campo do formulario com id especifico
     const senhaInput = document.getElementById('senha-login');//Pega o campo do formulario com id especifico
+
+    // Se o formulário não existir nesta página, para o script
+    if (!formLogin) return;
 
     formLogin.addEventListener('submit', function (event) {//Adiciona um evento de escuta para o formulario, quando for submetido
 
@@ -14,7 +17,9 @@ document.addEventListener('DOMContentLoaded', function () { //serve para que o j
             senha: senhaInput.value //Pega o valor do campo senha
         };
 
-        const urlApiLogin = 'https://agenddev.onrender.com'; // Constante com a URL do servidor + rota de login da API
+        // --- A CORREÇÃO ESTÁ AQUI ---
+        // A URL deve apontar para a ROTA DE LOGIN, e não para a raiz do site
+        const urlApiLogin = 'https://agenddev.onrender.com/login';
 
         fetch(urlApiLogin, { //Usamos o fetch para fazer a requisicao para a API
             method: 'POST', //Metodo POST para enviar dados
@@ -31,19 +36,11 @@ document.addEventListener('DOMContentLoaded', function () { //serve para que o j
                     localStorage.setItem('usuarioLogado', JSON.stringify(data.usuario));
 
                     // Redireciona com base no tipo de usuário
-                    // .trim() remove espaços em branco no início e no fim
-                    // .toLowerCase() converte tudo para minúsculo
                     if (data.usuario.tipo.trim().toLowerCase() === 'admin') {
-
-                        // *** AQUI ESTÁ A CORREÇÃO QUE FALTAVA ***
                         window.location.href = 'admin.html'; // Se for Admin, vai para o painel do admin
-
                     } else {
-                        // Se for qualquer outra coisa (Docente), vai para a reserva
-                        window.location.href = 'reserva.html';
+                        window.location.href = 'reserva.html'; // Se for Docente, vai para a reserva
                     }
-
-                    // *** ESTE 'else' ESTAVA NO LUGAR ERRADO ANTES ***
                 } else {
                     // Se o back-end deu erro (ex: senha errada)
                     alert('Erro no login: ' + data.mensagem); // Mostramos o erro retornado pela API
