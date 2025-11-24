@@ -5,63 +5,84 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Painel Admin - Gerenciamento</title>
-  <link href="css/custom.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
+  
+  <link href="css/custom.css" rel="stylesheet" />
 </head>
 
-<body>
-  <div id="barra-acessibilidade">
-    <button type="button" class="btn btn-sm btn-outline-light me-2"
-      onclick="window.location.href='../index.html'">INICIO</button>
-    <button id="aumentar-fonte">A+</button>
-    <button id="diminuir-fonte">A-</button>
-    <button id="alternar-contraste"><i class="bi bi-circle-half"></i></button>
+<body class="bg-light">
+
+  <div class="acessibilidade-bar">
+    <button type="button" class="btn btn-sm btn-outline-light me-2" onclick="window.location.href='../index.html'">INICIO</button>
+    <button id="aumentar-fonte" class="btn btn-sm btn-outline-light me-2">A+</button>
+    <button id="diminuir-fonte" class="btn btn-sm btn-outline-light me-2">A-</button>
+    <button id="alternar-contraste" class="btn btn-sm btn-outline-light"><i class="bi bi-circle-half"></i></button>
   </div>
 
-  <header>
-    <h1>Gerenciamento de Agendamentos</h1>
-  </header>
+  <div class="container-fluid mt-4 px-4"> <header class="mb-4 text-center">
+      <h1 class="display-6 fw-bold" style="color: #003366;">Gerenciamento de Agendamentos</h1>
+    </header>
 
-  <main>
-    <section id="secao-filtro">
-      <h2>Filtrar Agendamentos</h2>
-      <div>
-        <label for="campo-data-filtro">Filtrar por Data:</label>
-        <input type="date" id="campo-data-filtro" />
-        <button id="btn-filtrar">Filtrar</button>
+    <main>
+      
+      <section id="secao-filtro" class="container-cadastro p-4 mb-4" style="max-width: 100%; margin: 0;">
+        <div class="row align-items-end">
+          
+          <div class="col-md-4">
+            <label for="campo-data-filtro" class="form-label fw-bold">Filtrar por Data:</label>
+            <div class="input-group">
+              <input type="date" id="campo-data-filtro" class="form-control" />
+              <button id="btn-filtrar" class="btn btn-primary">
+                <i class="bi bi-search"></i> Filtrar
+              </button>
+            </div>
+          </div>
 
-        <a href="cadastro.html" class="btn btn-success">
-          <i class="bi bi-person-plus-fill"></i>
-        </a>
-      </div>
-    </section>
+          <div class="col-md-8 text-md-end mt-3 mt-md-0">
+            <span class="text-muted me-2">Novo Usuário?</span>
+            <a href="cadastro.html" class="btn btn-success">
+              <i class="bi bi-person-plus-fill"></i> Cadastrar
+            </a>
+          </div>
+        </div>
+      </section>
 
-    <section id="secao-tabela">
-      <h2>Agendamentos Encontrados</h2>
-      <table id="tabela-agendamentos">
-        <thead>
-          <tr>
-            <th>Nome (E-mail)</th>
-            <th>Tipo</th>
-            <th>Sala</th>
-            <th>Data/Hora</th>
-            <th>Finalidade</th>
-            <th>Solicitações</th>
-            <th>Observação</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="corpo-tabela-dados"></tbody>
-      </table>
-    </section>
-  </main>
+      <section id="secao-tabela" class="card shadow-sm">
+        <div class="card-header bg-white py-3">
+          <h2 class="h5 m-0 fw-bold text-secondary"><i class="bi bi-table"></i> Agendamentos Encontrados</h2>
+        </div>
+        
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table id="tabela-agendamentos" class="table table-striped table-hover align-middle mb-0">
+              <thead class="table-dark"> <tr>
+                  <th class="p-3">Nome (E-mail)</th>
+                  <th>Tipo</th>
+                  <th>Sala</th>
+                  <th>Data/Hora</th>
+                  <th>Finalidade</th>
+                  <th>Solicitações</th>
+                  <th>Observação</th>
+                  <th>Status</th>
+                  <th class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-tabela-dados">
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
-      <footer class="mt-5 p-3 text-center text-muted">
-          <p>© 2025 - AgendDev </p>
-          </footer>
+    </main>
+  </div>
+
+  <footer class="mt-5 p-3 text-center text-muted">
+      <p>© 2025 - AgendDev </p>
+  </footer>
 
   <div vw class="enabled">
     <div vw-access-button class="active"></div>
@@ -74,8 +95,9 @@
   <script>
     new window.VLibras.Widget("https://vlibras.gov.br/app");
   </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/acessibilidade.js"></script>
   <script src="../js/admin.js"></script>
 </body>
-
 </html>
