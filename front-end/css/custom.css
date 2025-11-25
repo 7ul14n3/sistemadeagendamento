@@ -99,7 +99,7 @@ body.alto-contraste .container-cadastro .btn-primary:hover {
     transform: scale(1.02);}
 
 
-/*  Botão Secundário*/
+/* 2. Botão Secundário*/
 body.alto-contraste .container-cadastro .btn-secondary {
     background-color: #12b923 !important;
     color: #ffffff !important;
@@ -113,3 +113,40 @@ body.alto-contraste .container-cadastro .btn-secondary:hover {
     background-color: #495057 !important; 
     border-color: #495057 !important;
 } 
+
+/*BOTÕES DA TABELA ADMIN*/
+
+/* Botão rejeitar*/
+.btn-rejeitar {
+    background-color: #ed1f1f !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    width: 100%;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.btn-rejeitar:hover {
+    background-color: #b61928 !important;
+    transform: scale(1.05);
+}
+
+/* Botão finalizar */
+.btn-finalizar {
+    background-color: #12b923 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.btn-finalizar:hover {
+    background-color: #145c32 !important;
+    transform: scale(1.05);
+}
