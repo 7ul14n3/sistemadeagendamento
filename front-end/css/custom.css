@@ -1,93 +1,292 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
 /*GERAL & BOTÕES */
-body { font-family: 'Roboto', sans-serif !important; background-color: #f8f9fa; }
-.card { border-top: 4px solid #eaecee !important; }
-footer { padding-bottom: 20px; }
+body {
+    font-family: 'Roboto', sans-serif !important;
+    background-color: #f8f9fa;
+}
+
+.card {
+    border-top: 4px solid #eaecee !important;
+}
+
+footer {
+    padding-bottom: 20px;
+}
 
 /* Cores Padrão dos Botões */
-.btn-primary { background-color: #12b923 !important; border-color: #003366 !important; color: white; }
-.btn-secondary { background-color: #12b923 !important; border-color: #f66504 !important; color: white; }
+.btn-primary {
+    background-color: #12b923 !important;
+    border-color: #003366 !important;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #12b923 !important;
+    border-color: #f66504 !important;
+    color: white;
+}
 
 /*BARRA DE ACESSIBILIDADE*/
-.acessibilidade-bar { background-color: #003366; padding: 10px; text-align: right; border-bottom: 1px solid #ddd; }
-.acessibilidade-bar button { background: transparent; border: 1px solid #f4f5f6; color: #f3f5f7; margin-left: 5px; padding: 1px 5px; border-radius: 10px; cursor: pointer; transition: 0.3s; }
-.acessibilidade-bar button:hover { background-color: #055d88; color: #fff; }
+.acessibilidade-bar {
+    background-color: #003366;
+    padding: 10px;
+    text-align: right;
+    border-bottom: 1px solid #ddd;
+}
 
-@media (max-width: 768px) { .acessibilidade-bar { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 5px; } }
+.acessibilidade-bar button {
+    background: transparent;
+    border: 1px solid #f4f5f6;
+    color: #f3f5f7;
+    margin-left: 5px;
+    padding: 1px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.acessibilidade-bar button:hover {
+    background-color: #055d88;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .acessibilidade-bar {
+        display: flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+}
 
 /*LINKS & FORMULÁRIOS */
-.registrer-link { text-align: center; margin-top: 30px; color: #101010; }
-.registrer-link a { color: #003366; font-weight: 600; text-decoration: none; }
-.registrer-link a:hover { color: #82b0de; text-decoration: underline; }
+.registrer-link {
+    text-align: center;
+    margin-top: 30px;
+    color: #101010;
+}
 
-.input-senha, .mb-3 { position: relative; }
-.mb-3 label i, .input-senha label i { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: #6c757d; }
-.mb-3 input, .input-senha input { padding-right: 2.5rem; }
-input::placeholder { font-style: italic; }
+.registrer-link a {
+    color: #003366;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.registrer-link a:hover {
+    color: #82b0de;
+    text-decoration: underline;
+}
+
+.input-senha,
+.mb-3 {
+    position: relative;
+}
+
+.mb-3 label i,
+.input-senha label i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #6c757d;
+}
+
+.mb-3 input,
+.input-senha input {
+    padding-right: 2.5rem;
+}
+
+input::placeholder {
+    font-style: italic;
+}
 
 /*CARTÃO BRANCO (LOGIN/CADASTRO)*/
-.container-cadastro { background-color: #fff; width: 90%; max-width: 500px; margin: 50px auto; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #003366; }
-.container-cadastro h1 { text-align: center; color: #01376d; margin-bottom: 30px; font-weight: bold; }
+.container-cadastro {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #003366;
+}
 
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #0a0909; }
-.form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-.form-group input:focus { border-color: #003366; outline: none; }
+.container-cadastro h1 {
+    text-align: center;
+    color: #01376d;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
 
-.botoes-acao { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
-.botoes-acao button { width: 100%; padding: 12px; font-size: 16px; font-weight: bold; border-radius: 5px; border: none; cursor: pointer; }
-.botoes-acao .btn-primary { background-color: #003366 !important; }
-.botoes-acao .btn-secondary { background-color: #0ea42a !important; }
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #0a0909;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    border-color: #003366;
+    outline: none;
+}
+
+.botoes-acao {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.botoes-acao button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.botoes-acao .btn-primary {
+    background-color: #003366 !important;
+}
+
+.botoes-acao .btn-secondary {
+    background-color: #0ea42a !important;
+}
 
 /* Troca Automática da logo */
-.logo-claro { display: inline-block; } .logo-escuro { display: none; }
+.logo-claro {
+    display: inline-block;
+}
+
+.logo-escuro {
+    display: none;
+}
 
 /*MODO ESCURO*/
-body.alto-contraste { background-color: #111 !important; color: #E5E5E5 !important; }
+body.alto-contraste {
+    background-color: #111 !important;
+    color: #E5E5E5 !important;
+}
 
 /*Elementos que ficam branco no fundo preto */
-body.alto-contraste h1, body.alto-contraste p, body.alto-contraste .form-label, 
-body.alto-contraste i, body.alto-contraste a { color: #fff !important; }
+body.alto-contraste h1,
+body.alto-contraste p,
+body.alto-contraste .form-label,
+body.alto-contraste i,
+body.alto-contraste a {
+    color: #fff !important;
+}
 
 /* Cores Específicas de Componentes Escuros */
-body.alto-contraste .card { background-color: #111 !important; border-color: #ff0 !important; }
-body.alto-contraste .registrer-link a { color: #fff !important; }
-body.alto-contraste .form-control::placeholder { color: #0b0b0b !important; }
+body.alto-contraste .card {
+    background-color: #111 !important;
+    border-color: #ff0 !important;
+}
+
+body.alto-contraste .registrer-link a {
+    color: #fff !important;
+}
+
+body.alto-contraste .form-control::placeholder {
+    color: #0b0b0b !important;
+}
 
 /*Inputs e Botões (Fundo Claro para Contraste) */
-body.alto-contraste .form-control, body.alto-contraste .form-select, body.alto-contraste .btn { 
-    background-color: #f4eded !important; color: #0d0d0d !important; border: 1px solid #e9bd0b !important; 
+body.alto-contraste .form-control,
+body.alto-contraste .form-select,
+body.alto-contraste .btn {
+    background-color: #f4eded !important;
+    color: #0d0d0d !important;
+    border: 1px solid #e9bd0b !important;
 }
-body.alto-contraste .btn-primary { background-color: #f8f6f6 !important; border-color: #e2c20d !important; }
+
+body.alto-contraste .btn-primary {
+    background-color: #f8f6f6 !important;
+    border-color: #e2c20d !important;
+}
 
 /*Barra de Acessibilidade Escura */
-body.alto-contraste .acessibilidade-bar { background-color: #000 !important; border-bottom: 1px solid #f9f5f5 !important; }
-body.alto-contraste .acessibilidade-bar button { border-color: #ff0 !important; color: #000000 !important; }
+body.alto-contraste .acessibilidade-bar {
+    background-color: #000 !important;
+    border-bottom: 1px solid #f9f5f5 !important;
+}
+
+body.alto-contraste .acessibilidade-bar button {
+    border-color: #ff0 !important;
+    color: #000000 !important;
+}
+
 /* Destaque do Botão sol/lua */
-body.alto-contraste #alternar-contraste { color: #ff0 !important; border-color: #ff0 !important; }
-body.alto-contraste #alternar-contraste:hover { background-color: #ff0 !important; color: #000 !important; }
+body.alto-contraste #alternar-contraste {
+    color: #ff0 !important;
+    border-color: #ff0 !important;
+}
+
+body.alto-contraste #alternar-contraste:hover {
+    background-color: #ff0 !important;
+    color: #000 !important;
+}
 
 /*Troca do Logo e Tamanhos de Fonte */
-body.alto-contraste .logo-claro { display: none !important; } 
-body.alto-contraste .logo-escuro { display: inline-block !important; }
-body.fonte-normal { font-size: 16px; } body.fonte-media { font-size: 20px; } body.fonte-grande { font-size: 30px; }
+body.alto-contraste .logo-claro {
+    display: none !important;
+}
+
+body.alto-contraste .logo-escuro {
+    display: inline-block !important;
+}
+
+body.fonte-normal {
+    font-size: 16px;
+}
+
+body.fonte-media {
+    font-size: 20px;
+}
+
+body.fonte-grande {
+    font-size: 30px;
+}
 
 /*texto escuro dentro da caixa branca no modo noturno */
-body.alto-contraste .container-cadastro h1, 
-body.alto-contraste .container-cadastro label, 
-body.alto-contraste .container-cadastro p, 
-body.alto-contraste .container-cadastro .form-label { color: #0f0f0f !important; }
+body.alto-contraste .container-cadastro h1,
+body.alto-contraste .container-cadastro label,
+body.alto-contraste .container-cadastro p,
+body.alto-contraste .container-cadastro .form-label {
+    color: #0f0f0f !important;
+}
 
-body.alto-contraste .container-cadastro a { color: #14599d !important; }
-body.alto-contraste .container-cadastro i { color: #1a5a93 !important; }
+body.alto-contraste .container-cadastro a {
+    color: #14599d !important;
+}
+
+body.alto-contraste .container-cadastro i {
+    color: #1a5a93 !important;
+}
 
 /*BOTÕES NO MODO ESCURO (Dentro da caixa branca*/
 
 /* Botão Principal (Login / Cadastrar)*/
 body.alto-contraste .container-cadastro .btn-primary {
-    background-color: #003366 !important; 
-    color: #ffffff !important;            
+    background-color: #003366 !important;
+    color: #ffffff !important;
     border: 2px solid #003366 !important;
     transition: all 0.3s ease;
 }
@@ -96,7 +295,8 @@ body.alto-contraste .container-cadastro .btn-primary {
 body.alto-contraste .container-cadastro .btn-primary:hover {
     background-color: #12b923 !important;
     border-color: #12b923 !important;
-    transform: scale(1.02);}
+    transform: scale(1.02);
+}
 
 
 /* 2. Botão Secundário*/
@@ -104,15 +304,14 @@ body.alto-contraste .container-cadastro .btn-secondary {
     background-color: #12b923 !important;
     color: #ffffff !important;
     border: 2px solid #044f0c !important;
-    transition: all 
-0.3s ease;
+    transition: all 0.3s ease;
 }
 
 /* Efeito ao passar o mouse*/
 body.alto-contraste .container-cadastro .btn-secondary:hover {
-    background-color: #495057 !important; 
+    background-color: #495057 !important;
     border-color: #495057 !important;
-} 
+}
 
 /*BOTÕES DA TABELA ADMIN*/
 
@@ -149,4 +348,93 @@ body.alto-contraste .container-cadastro .btn-secondary:hover {
 .btn-finalizar:hover {
     background-color: #145c32 !important;
     transform: scale(1.05);
+}
+
+/*////////////////////// Ícone dentro do input ////////////////////////////////*/
+.input-box {
+    position: relative;
+}
+
+.input-box input {
+    padding-right: 40px;
+    /* espaço pro ícone da direita */
+}
+
+.icone-input {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #555;
+    pointer-events: none;
+}
+
+.form-group .form-label {
+    margin-bottom: 3px !important;
+    /* aproxima o label do input */
+    display: inline-block;
+    margin-top: 9px;
+    /* espaço entre label e o input acima */
+}
+
+
+/*/////////////// Link cadastrar com classe específica ///////////////*/
+.link-cadastrar {
+    color: #527ebe;
+    font-weight: 500;
+    transition: 0.2s ease;
+    text-decoration: none !important;
+    /* remove underline on hover */
+
+}
+
+.link-cadastrar:hover {
+    color: #0a243e;
+}
+
+/*///////////////////Botão de Ação animado//////////////////////*/
+.btn.btn-primary.w-100 {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn.btn-primary.w-100:hover {
+    transform: scale(1.03);
+    /* cresce levemente */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.btn.btn-primary.w-100:active {
+    transform: scale(0.97);
+    /* sensação de clique */
+}
+
+.btn.btn-secondary.w-100 {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn.btn-secondary.w-100:hover {
+    transform: scale(1.03);
+    /* cresce levemente */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.btn.btn-secondary.w-100:active {
+    transform: scale(0.97);
+    /* sensação de clique */
+}
+
+.btn.btn-primary.btn-lg.px-5.shadow {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn.btn-primary.btn-lg.px-5.shadow:hover {
+    transform: scale(1.03);
+    /* cresce levemente */
+    ;
+}
+
+.btn.btn-primary.btn-lg.px-5.shadow:active {
+    transform: scale(0.97);
+    /* sensação de clique */
 }
