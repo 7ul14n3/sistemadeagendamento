@@ -1,3 +1,5 @@
+---------------AGENDDEV------------------
+
 INTRODUÇÃO
 
 O processo de agendamento manual de espaços acadêmicos, como laboratórios e auditórios, apresenta falhas de organização e baixo controle. O projeto AgendDev propõe uma plataforma web para otimizar esse processo, oferecendo praticidade, transparência e melhor comunicação entre professores e gestores.
