@@ -6,15 +6,15 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
-from threading import Thread # Importante para não travar o site
+from threading import Thread
 
 load_dotenv()
 app = Flask(__name__)
 
-# Configuração do CORS (Permite que seu site fale com a API)
+# Configura CORS
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-# --- Configuração do Banco de Dados ---
+# --- Banco de Dados ---
 db_url = os.environ.get("DATABASE_URL")
 if db_url and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
@@ -22,30 +22,34 @@ if db_url and db_url.startswith("postgres://"):
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# --- Configuração do Flask-Mail (Porta 587 com TLS) ---
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# --- SMTP BREVO ---
+app.config['MAIL_SERVER'] = 'smtp-relay.brevo.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
-app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("MAIL_USERNAME")
 
-# Inicializa as ferramentas
+# LOGIN DO BREVO (o user é o email da sua conta brevo)
+app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")  # lleticianunes13@gmail.com
+app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")  # sua SMTP KEY
+
+# E-mail que aparecerá para o usuário:
+app.config['MAIL_DEFAULT_SENDER'] = 'agenddev@gmail.com'
+
+# Inicializa
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
 
-# --- Função Assistente para Enviar E-mail em Segundo Plano ---
+# --- Thread auxiliar ---
 def enviar_email_thread(app, msg):
     with app.app_context():
         try:
             mail.send(msg)
-            print("SUCESSO: E-mail enviado em segundo plano.")
+            print("SUCESSO: Email enviado.")
         except Exception as e:
-            print(f"FALHA NO E-MAIL (Mas a reserva está salva): {str(e)}")
+            print("ERRO EMAIL:", e)
 
-# --- MODELOS (Tabelas) ---
+# --- MODELOS ---
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(120), nullable=False)
@@ -69,10 +73,9 @@ class Agendamento(db.Model):
     usuario = db.relationship('Usuario', backref=db.backref('agendamentos', lazy=True))
 
 # --- ROTAS ---
-
 @app.route('/')
 def index():
-    return "API do Sistema de Agendamento v3.0 (Com Threading) no ar!"
+    return "API do Sistema de Agendamento v3.0 (Com SMTP Brevo) no ar!"
 
 @app.route('/cadastro', methods=['POST'])
 def cadastrar_usuario():
@@ -112,18 +115,22 @@ def login_usuario():
     if not usuario or not check_password_hash(usuario.senha_hash, senha):
         return jsonify({'status': 'erro', 'mensagem': 'Usuário ou senha incorretos!'}), 401
 
-    return jsonify({'status': 'sucesso', 'mensagem': 'Login realizado!', 'usuario': {
-        'id': usuario.id,
-        'nome': usuario.nome,
-        'matricula': usuario.matricula,
-        'email': usuario.email,
-        'tipo': usuario.tipo
-    }}), 200
+    return jsonify({
+        'status': 'sucesso',
+        'mensagem': 'Login realizado!',
+        'usuario': {
+            'id': usuario.id,
+            'nome': usuario.nome,
+            'matricula': usuario.matricula,
+            'email': usuario.email,
+            'tipo': usuario.tipo
+        }
+    }), 200
 
 @app.route('/reservar', methods=['POST'])
 def reservar_horario():
     dados = request.get_json()
-    # Extração segura dos dados
+
     tipo_reserva = dados.get('tipo_reserva')
     sala = dados.get('sala')
     data = dados.get('data')
@@ -140,21 +147,19 @@ def reservar_horario():
     if not usuario:
         return jsonify({'status': 'erro', 'mensagem': 'Usuário não encontrado!'}), 401
 
-    # Verificação de Conflito
+    # Verificação de conflito
     query_filtro = [Agendamento.data == data]
     if sala:
         query_filtro.append(Agendamento.sala == sala)
     else:
         query_filtro.append(Agendamento.tipo_reserva == tipo_reserva)
-    
+
     agendamentos_existentes = Agendamento.query.filter(*query_filtro).all()
 
     for ag in agendamentos_existentes:
-        conflito = (horario_inicio < ag.horario_fim) and (horario_fim > ag.horario_inicio)
-        if conflito:
+        if (horario_inicio < ag.horario_fim) and (horario_fim > ag.horario_inicio):
             return jsonify({'status': 'erro', 'mensagem': f'Conflito! Horário ocupado: {ag.horario_inicio} - {ag.horario_fim}'}), 409
 
-    # Criação e Salvamento
     novo_agendamento = Agendamento(
         usuario_id=usuario.id,
         tipo_reserva=tipo_reserva,
@@ -171,21 +176,23 @@ def reservar_horario():
         db.session.add(novo_agendamento)
         db.session.commit()
 
-        # --- ENVIO DE E-MAIL (THREADING) ---
+        # Envio do e-mail com Brevo
         msg = Message(
             subject=f"Confirmação de Reserva - {tipo_reserva}",
             recipients=[usuario.email],
-            body=f"""Olá {usuario.nome}, sua reserva para {data} das {horario_inicio} às {horario_fim} foi confirmada."""
+            body=f"Olá {usuario.nome}, sua reserva para {data} das {horario_inicio} às {horario_fim} foi confirmada."
         )
-        # Dispara o e-mail em segundo plano para não travar o retorno
+
         Thread(target=enviar_email_thread, args=(app, msg)).start()
-        
+
         return jsonify({'status': 'sucesso', 'mensagem': 'Reserva realizada com sucesso!'}), 201
 
     except Exception as e:
         db.session.rollback()
         return jsonify({'status': 'erro', 'mensagem': f'Erro ao salvar: {str(e)}'}), 500
 
+
+# Rotas restantes (copiei igual ao seu)
 @app.route('/agendamentos/<string:data>', methods=['GET'])
 def get_agendamentos_por_data(data):
     try:
@@ -198,7 +205,8 @@ def get_agendamentos_por_data(data):
 def get_meus_agendamentos(email):
     try:
         usuario = Usuario.query.filter_by(email=email).first()
-        if not usuario: return jsonify({'status': 'erro', 'mensagem': 'Usuário não encontrado'}), 404
+        if not usuario:
+            return jsonify({'status': 'erro', 'mensagem': 'Usuário não encontrado'}), 404
         
         agendamentos = Agendamento.query.filter_by(usuario_id=usuario.id).order_by(Agendamento.data.desc()).all()
         
@@ -253,7 +261,8 @@ def atualizar_status(id):
     dados = request.get_json()
     try:
         agendamento = Agendamento.query.get(id)
-        if not agendamento: return jsonify({'status': 'erro', 'mensagem': 'Não encontrado'}), 404
+        if not agendamento:
+            return jsonify({'status': 'erro', 'mensagem': 'Não encontrado'}), 404
         
         agendamento.status = dados.get('status')
         if dados.get('observacao_admin'):
