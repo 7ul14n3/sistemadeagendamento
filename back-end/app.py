@@ -22,12 +22,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
-# --- Configuração do Flask-Mail (para GMAIL) ---
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME") # Pega do .env
-app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD") # Pega do .env
+# --- Configuração do Flask-Mail (CORRIGIDA PARA PORTA 587) ---
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587               # Usar porta 587 (padrão TLS)
+app.config['MAIL_USE_TLS'] = True           # Ativar TLS
+app.config['MAIL_USE_SSL'] = False          # Desativar SSL (eles não funcionam juntos)
+app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("MAIL_USERNAME")
 
 # Inicializa as ferramentas de email
