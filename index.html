@@ -25,42 +25,89 @@
     </button>
   </header>
 
-  <!-- CONTAINER CENTRAL -->
-  <main class="flex-grow-1 d-flex align-items-center justify-content-center p-3">
-    <div class="container-cadastro text-center">
+  <!-- CONTAINER PRINCIPAL DUPLO PARA DESKTOP -->
+  <main class="flex-grow-1 d-flex align-items-center justify-content-center p-3 p-md-5">
+    <div class="container my-auto">
+      <div class="row align-items-center g-5 justify-content-center">
+        
+        <!-- COLUNA ESQUERDA: APRESENTAÇÃO (Visível em telas médias/grandes) -->
+        <div class="col-lg-6 text-start d-none d-lg-block">
+          <div class="pe-lg-4">
+            <span class="badge bg-primary bg-opacity-20 text-primary mb-3 px-3 py-2 rounded-pill fw-semibold">
+              <i class="bi bi-stars me-1"></i> Plataforma Inteligente
+            </span>
+            <h1 class="display-5 fw-bold mb-3" style="letter-spacing: -0.03em;">
+              Gestão de Agendamentos Descomplicada
+            </h1>
+            <p class="text-muted fs-5 mb-4">
+              Organize horários, acompanhe reservas e gerencie atendimentos em um único ambiente moderno e acessível.
+            </p>
 
-      <!-- LOGOS -->
-      <div class="area-logo mb-3">
-        <img src="img/agenddev-logo.png" 
-             alt="Logo AgendDev" 
-             class="logo-claro img-fluid" 
-             style="max-width: 250px;"
-             onerror="this.onerror=null; this.src='front-end/img/agenddev-logo.png';">
+            <!-- Recursos Rápidos em Grade -->
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="d-flex align-items-center p-3 bg-body bg-opacity-50 border border-secondary border-opacity-10 rounded-3 backdrop-blur">
+                  <i class="bi bi-calendar2-check-fill text-primary fs-3 me-3"></i>
+                  <div>
+                    <strong class="d-block text-body">Reservas Rápidas</strong>
+                    <small class="text-muted">Em poucos cliques</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex align-items-center p-3 bg-body bg-opacity-50 border border-secondary border-opacity-10 rounded-3 backdrop-blur">
+                  <i class="bi bi-shield-lock-fill text-primary fs-3 me-3"></i>
+                  <div>
+                    <strong class="d-block text-body">Acesso Seguro</strong>
+                    <small class="text-muted">Dados protegidos</small>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <img src="img/agenddev-logo-branco sem fd.png" 
-             alt="Logo AgendDev Branco" 
-             class="logo-escuro img-fluid" 
-             style="max-width: 250px; display: none;"
-             onerror="this.onerror=null; this.src='front-end/img/agenddev-logo-branco sem fd.png';">
+          </div>
+        </div>
+
+        <!-- COLUNA DIREITA: CARTÃO PRINCIPAL -->
+        <div class="col-lg-5 col-md-8 col-sm-11">
+          <div class="container-cadastro text-center mx-auto">
+
+            <!-- LOGOS -->
+            <div class="area-logo mb-3">
+              <img src="img/agenddev-logo.png" 
+                   alt="Logo AgendDev" 
+                   class="logo-claro img-fluid" 
+                   style="max-width: 220px;"
+                   onerror="this.onerror=null; this.src='front-end/img/agenddev-logo.png';">
+
+              <img src="img/agenddev-logo-branco sem fd.png" 
+                   alt="Logo AgendDev Branco" 
+                   class="logo-escuro img-fluid" 
+                   style="max-width: 220px; display: none;"
+                   onerror="this.onerror=null; this.src='front-end/img/agenddev-logo-branco sem fd.png';">
+            </div>
+
+            <h2 class="h4 fw-bold mb-2">Seja Bem-Vindo</h2>
+            <p class="text-muted mb-4 small">Acesse sua conta ou cadastre-se para gerenciar seus horários.</p>
+
+            <div class="botoes-acao">
+              <a href="front-end/login.html" class="btn btn-primary w-100 py-3 fw-bold">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Fazer Login
+              </a>
+              <a href="front-end/cadastro.html" class="link-cadastrar small mt-2">
+                Ainda não possui uma conta? Cadastre-se
+              </a>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-
-      <h1 class="h3 fw-bold mb-2">Sistema de Agendamento</h1>
-      <p class="text-muted mb-4 small">Gerencie seus horários e atendimentos com praticidade e segurança.</p>
-
-      <div class="botoes-acao">
-        <a href="front-end/login.html" class="btn btn-primary">
-          <i class="bi bi-box-arrow-in-right me-2"></i>Fazer Login
-        </a>
-        <a href="front-end/cadastro.html" class="link-cadastrar small mt-2">
-          Ainda não possui uma conta? Cadastre-se
-        </a>
-      </div>
-
     </div>
   </main>
 
   <!-- RODAPÉ -->
-  <footer class="text-center text-muted py-3">
+  <footer class="text-center text-muted py-3 mt-auto">
     <small>© 2025 - AgendDev</small>
   </footer>
 
@@ -80,7 +127,7 @@
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Script de Acessibilidade Embutido de Garantia com Fallback Explicito -->
+  <!-- Script de Acessibilidade Embutido -->
   <script>
     function alternarTema() {
       document.body.classList.toggle('alto-contraste');
@@ -107,7 +154,6 @@
       }
     }
 
-    // Carrega o tema ao abrir a página
     window.addEventListener('DOMContentLoaded', function () {
       if (localStorage.getItem('tema_escuro') === 'ativo') {
         document.body.classList.add('alto-contraste');
@@ -115,7 +161,6 @@
     });
   </script>
 
-  <!-- Script Externo -->
   <script src="front-end/js/acessibilidade.js"></script>
     
 </body>
