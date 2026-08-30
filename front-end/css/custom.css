@@ -1,47 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* ==========================================================================
-   AGENDDEV - SISTEMA DE ACESSIBILIDADE (MODO ESCURO & TAMANHO DE FONTE)
+   1. VARIÁVEIS DE SISTEMA (DESIGN SYSTEM MODERNO)
    ========================================================================== */
+:root {
+  /* Cores Principais */
+  --primary-color: #1e40af;
+  --primary-hover: #1e3a8a;
+  --primary-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  
+  /* Cores dos Cards e Textos */
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #cbd5e1;
 
-// Função Global: Alternar Modo Escuro / Alto Contraste
-window.alternarTema = function () {
-  document.body.classList.toggle('alto-contraste');
-  const estaEscuro = document.body.classList.contains('alto-contraste');
-  localStorage.setItem('tema_escuro', estaEscuro ? 'ativo' : 'inativo');
-};
+  /* Barra Superior Integrada */
+  --bg-acessibilidade: #0f172a;
 
-// Função Global: Alternar Tamanho da Fonte (Normal, Média, Grande)
-window.mudarFonte = function (acao) {
-  const body = document.body;
-  if (acao === 'aumentar') {
-    if (body.classList.contains('fonte-media')) {
-      body.classList.remove('fonte-media');
-      body.classList.add('fonte-grande');
-    } else if (!body.classList.contains('fonte-grande')) {
-      body.classList.add('fonte-media');
-    }
-  } else if (acao === 'diminuir') {
-    if (body.classList.contains('fonte-grande')) {
-      body.classList.remove('fonte-grande');
-      body.classList.add('fonte-media');
-    } else {
-      body.classList.remove('fonte-media');
-    }
-  }
-};
+  /* Sombras 3D Suaves */
+  --radius-lg: 20px;
+  --radius-md: 10px;
+  --shadow-modern: 0 20px 40px -15px rgba(15, 23, 42, 0.12), 0 0 15px rgba(0, 0, 0, 0.03);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-// Executa automaticamente ao carregar qualquer página
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Aplica o tema salvo no localStorage
-  if (localStorage.getItem('tema_escuro') === 'ativo') {
-    document.body.classList.add('alto-contraste');
-  }
+/* Modo Escuro / Alto Contraste */
+body.alto-contraste {
+  --bg-card: rgba(30, 41, 59, 0.92);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  --bg-acessibilidade: #020617;
+  --shadow-modern: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+}
 
-  // 2. Mapeamento de cliques caso o HTML use id="" em vez de onclick=""
-  const btnAumentar = document.getElementById('aumentar-fonte');
-  const btnDiminuir = document.getElementById('diminuir-fonte');
-  const btnContraste = document.getElementById('alternar-contraste');
+/* ==========================================================================
+   2. ESTILOS BASE E FUNDO COM GRID DE PONTOS (MODO CLARO VIBRANTE)
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+}
 
-  if (btnAumentar) btnAumentar.addEventListener('click', () => window.mudarFonte('aumentar'));
-  if (btnDiminuir) btnDiminuir.addEventListener('click', () => window.mudarFonte('diminuir'));
-  if (btnContraste) btnContraste.addEventListener('click', () => window.alternarTema());
-});
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  
+  /* Fundo Claro: Gradiente tricolor vibrante + Malha de pontos definida */
+  background-color: #f1f5f9 !important;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.25) 0px, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(147, 51, 234, 0.2) 0px, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(14, 165, 233, 0.18) 0px, transparent 60%),
+    radial-gradient(#94a3b8 1.4px, transparent 1.4px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px !important;
+  background-attachment: fixed !important;
+  
+  color: var(--text-main) !important;
+  transition: var(--transition);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Fundo Escuro (Alto Contraste) */
+body.alto-contraste {
+  background-color: #0b0f19 !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.35) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(147, 51, 234, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(59, 130, 246, 0.2) 0px, transparent 70%),
+    radial-gradient(#334155 1.4px, transparent 1.4px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px !important;
+}
+
+/* Modo Escuro Mantido */
+body.alto-contraste {
+  background-color: #0b0f19 !important;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(147, 51, 234, 0.25) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, rgba(59, 130, 246, 0.2) 0px, transparent 70%),
+    radial-gradient(#334155 1.2px, transparent 1.2px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px !important;
+}
+
+/* ==========================================================================
+   4. CARTÃO CENTRAL (GLASSMORPHISM DE ALTO CONTRASTE)
+   ========================================================================== */
+.container-cadastro {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 36px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+}
+
+body.alto-contraste .container-cadastro {
+  background-color: rgba(15, 23, 42, 0.85) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+  border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   3. BARRA DE ACESSIBILIDADE SLIM
+   ========================================================================== */
+.acessibilidade-bar {
+  background-color: var(--bg-acessibilidade) !important;
+  padding: 8px 24px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+}
+
+.acessibilidade-bar button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff !important;
+  padding: 4px 12px !important;
+  border-radius: 6px;
+  font-size: 0.8rem !important;
+  font-weight: 600;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transition: var(--transition);
+}
+
+.acessibilidade-bar button:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   4. CARTÃO CENTRAL (GLASSMORPHISM & ELEVAÇÃO)
+   ========================================================================== */
+.container-cadastro {
+  background-color: var(--bg-card) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 36px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modern) !important;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+}
+
+/* Detalhe com gradiente no topo do card */
+.container-cadastro::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--primary-gradient);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+/* Logo e Imagens */
+.area-logo img {
+  max-width: 210px;
+  height: auto;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+}
+
+.logo-claro { display: block !important; margin: 0 auto; }
+.logo-escuro { display: none !important; margin: 0 auto; }
+
+body.alto-contraste .logo-claro { display: none !important; }
+body.alto-contraste .logo-escuro { display: block !important; }
+
+/* Tipografia */
+.container-cadastro h1 {
+  color: var(--text-main) !important;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.container-cadastro p {
+  color: var(--text-muted) !important;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   5. BOTÕES E MICROINTERAÇÕES
+   ========================================================================== */
+.botoes-acao {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.btn-primary {
+  background: var(--primary-gradient) !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35) !important;
+  opacity: 0.95;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.link-cadastrar {
+  color: var(--primary-color) !important;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.link-cadastrar:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  background: transparent !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--border-color) !important;
+}
+
+footer {
+  text-align: center;
+  color: var(--text-muted) !important;
+  padding: 24px 0;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   6. ALINHAMENTO DE ÍCONES NOS INPUTS
+   ========================================================================== */
+.input-box {
+  position: relative !important;
+  width: 100%;
+}
+
+.input-box input {
+  padding-right: 42px !important;
+}
+
+.input-box i,
+.input-box .icone-input {
+  position: absolute !important;
+  right: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: var(--text-muted) !important;
+  pointer-events: none !important;
+  font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   7. ACESSIBILIDADE E PROPAGAÇÃO DE FONTE
+   ========================================================================== */
+h1, h2, h3, p, label, input, button, a, span {
+  font-size: inherit;
+}
+
+body.fonte-media {
+  font-size: 1.15rem !important;
+}
+
+body.fonte-grande {
+  font-size: 1.3rem !important;
+}
+
+body.fonte-media h1, body.fonte-grande h1 {
+  font-size: 2rem !important;
+}
