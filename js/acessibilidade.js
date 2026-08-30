@@ -1,56 +1,47 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const body = document.body;
-    const btnAltoContraste = document.getElementById('alternar-contraste');
-    const btnAumentar = document.getElementById('aumentar-fonte');
-    const btnDiminuir = document.getElementById('diminuir-fonte');
+/* ==========================================================================
+   AGENDDEV - SISTEMA DE ACESSIBILIDADE (MODO ESCURO & TAMANHO DE FONTE)
+   ========================================================================== */
 
-    // --- GRUPO 1: ALTO CONTRASTE ---
-    // Verifica se os botões existem antes de adicionar "ouvintes"
-    if (btnAltoContraste) {
-        // Verifica se o usuário já tinha ativado o contraste antes
-        if (localStorage.getItem('altoContraste') === 'true') {
-            body.classList.add('alto-contraste');
-        }
+// Função Global: Alternar Modo Escuro / Alto Contraste
+window.alternarTema = function () {
+  document.body.classList.toggle('alto-contraste');
+  const estaEscuro = document.body.classList.contains('alto-contraste');
+  localStorage.setItem('tema_escuro', estaEscuro ? 'ativo' : 'inativo');
+};
 
-        btnAltoContraste.addEventListener('click', function () {
-            body.classList.toggle('alto-contraste');
-            localStorage.setItem('altoContraste', body.classList.contains('alto-contraste'));
-        });
+// Função Global: Alternar Tamanho da Fonte (Normal, Média, Grande)
+window.mudarFonte = function (acao) {
+  const body = document.body;
+  if (acao === 'aumentar') {
+    if (body.classList.contains('fonte-media')) {
+      body.classList.remove('fonte-media');
+      body.classList.add('fonte-grande');
+    } else if (!body.classList.contains('fonte-grande')) {
+      body.classList.add('fonte-media');
     }
-
-    // --- GRUPO 2: TAMANHO DA FONTE ---
-    const tamanhos = ['fonte-normal', 'fonte-media', 'fonte-grande'];
-    let indiceTamanho = 0;
-
-    const tamanhoSalvo = localStorage.getItem('tamanhoFonte');
-    if (tamanhoSalvo) {
-        indiceTamanho = tamanhos.indexOf(tamanhoSalvo);
-        if (indiceTamanho === -1) indiceTamanho = 0; // Reseta se o valor salvo for inválido
+  } else if (acao === 'diminuir') {
+    if (body.classList.contains('fonte-grande')) {
+      body.classList.remove('fonte-grande');
+      body.classList.add('fonte-media');
+    } else {
+      body.classList.remove('fonte-media');
     }
+  }
+};
 
-    // Aplica a classe inicial (mesmo se os botões não existirem)
-    // Remove classes antigas primeiro para garantir
-    body.classList.remove('fonte-normal', 'fonte-media', 'fonte-grande');
-    body.classList.add(tamanhos[indiceTamanho]);
+// Executa automaticamente ao carregar qualquer página
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Aplica o tema salvo no localStorage
+  if (localStorage.getItem('tema_escuro') === 'ativo') {
+    document.body.classList.add('alto-contraste');
+  }
 
-    // Verifica se os botões de fonte existem
-    if (btnAumentar && btnDiminuir) {
-        btnAumentar.addEventListener('click', function () {
-            if (indiceTamanho < tamanhos.length - 1) {
-                body.classList.remove(tamanhos[indiceTamanho]);
-                indiceTamanho++;
-                body.classList.add(tamanhos[indiceTamanho]);
-                localStorage.setItem('tamanhoFonte', tamanhos[indiceTamanho]);
-            }
-        });
+  // 2. Mapeamento de cliques caso o HTML use id="" em vez de onclick=""
+  const btnAumentar = document.getElementById('aumentar-fonte');
+  const btnDiminuir = document.getElementById('diminuir-fonte');
+  const btnContraste = document.getElementById('alternar-contraste');
 
-        btnDiminuir.addEventListener('click', function () {
-            if (indiceTamanho > 0) {
-                body.classList.remove(tamanhos[indiceTamanho]);
-                indiceTamanho--;
-                body.classList.add(tamanhos[indiceTamanho]);
-                localStorage.setItem('tamanhoFonte', tamanhos[indiceTamanho]);
-            }
-        });
-    }
+  if (btnAumentar) btnAumentar.addEventListener('click', () => window.mudarFonte('aumentar'));
+  if (btnDiminuir) btnDiminuir.addEventListener('click', () => window.mudarFonte('diminuir'));
+  if (btnContraste) btnContraste.addEventListener('click', () => window.alternarTema());
 });
