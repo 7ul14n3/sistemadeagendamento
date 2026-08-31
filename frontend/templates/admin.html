@@ -10,17 +10,17 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-  <!-- CSS Global -->
-  <link href="/Cod Py/sistemadeagendamento/frontend/css/geral.css" rel="stylesheet" />
-  <!-- CSS Específico do Admin (Modo Noturno) -->
-  <link href="/Cod Py/sistemadeagendamento/frontend/css/admin.css" rel="stylesheet" />
+  <!-- Caminhos Corrigidos -->
+  <link href="../css/geral.css" rel="stylesheet" />
+  <link href="../css/admin.css" rel="stylesheet" />
 </head>
 
 <body class="bg-light">
 
   <div class="acessibilidade-bar">
+    <!-- Caminho Corrigido -->
     <button type="button" class="btn btn-sm btn-outline-light me-2"
-      onclick="window.location.href='/Cod Py/sistemadeagendamento/index.html'">INÍCIO</button>
+      onclick="window.location.href='../index.html'">INÍCIO</button>
     <button id="aumentar-fonte" class="btn btn-sm btn-outline-light me-2">A+</button>
     <button id="diminuir-fonte" class="btn btn-sm btn-outline-light me-2">A-</button>
     <button id="alternar-contraste" class="btn btn-sm btn-outline-light"><i class="bi bi-circle-half"></i></button>
@@ -33,10 +33,8 @@
 
     <main>
 
-      <!-- SEÇÃO TOPO: FILTROS + QUADRADINHOS DE ESTATÍSTICAS -->
       <section id="secao-filtro" class="container-cadastro p-4 mb-4" style="max-width: 100%; margin: 0;">
 
-        <!-- Linha 1: Filtros e Botão Cadastrar -->
         <div class="row align-items-end mb-4 border-bottom pb-4">
           <div class="col-md-4 text-start">
             <label for="campo-data-filtro" class="form-label fw-bold">Filtrar por Data:</label>
@@ -55,7 +53,6 @@
           </div>
         </div>
 
-        <!-- Linha 2: Quadradinhos de Estatísticas (Espaços Mais Usados) -->
         <div class="row g-3 text-start">
           <div class="col-md-12 mb-1">
             <span class="text-muted fw-bold small text-uppercase"><i class="bi bi-graph-up-arrow me-1"></i> Espaços Mais
@@ -91,7 +88,6 @@
         </div>
       </section>
 
-      <!-- SEÇÃO TABELA (LARGURA TOTAL) -->
       <section id="secao-tabela" class="card shadow-sm border-0"
         style="background-color: var(--bg-card); backdrop-filter: blur(16px); border-radius: var(--radius-lg); overflow: hidden;">
         <div class="card-header bg-transparent py-3 border-bottom">
@@ -116,7 +112,6 @@
                 </tr>
               </thead>
               <tbody id="corpo-tabela-dados">
-                <!-- Linhas geradas pelo JS -->
               </tbody>
             </table>
           </div>
@@ -131,8 +126,9 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/Cod Py/sistemadeagendamento/frontend/static/acessibilidade.js"></script>
-  <script src="/Cod Py/sistemadeagendamento/frontend/static/admin.js"></script>
+  <!-- Caminhos Corrigidos -->
+  <script src="../static/acessibilidade.js"></script>
+  <script src="../static/admin.js"></script>
 </body>
 
 </html>
