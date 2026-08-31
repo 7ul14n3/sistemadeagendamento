@@ -1,0 +1,22 @@
+/* ==========================================================================
+   ALINHAMENTO DE ÍCONES NOS INPUTS (LOGIN E CADASTRO)
+   ========================================================================== */
+.input-box {
+    position: relative !important;
+    width: 100%;
+}
+
+.input-box input {
+    padding-right: 42px !important;
+}
+
+.input-box i,
+.input-box .icone-input {
+    position: absolute !important;
+    right: 14px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    color: var(--text-muted) !important;
+    pointer-events: none !important;
+    font-size: 1.1rem;
+}

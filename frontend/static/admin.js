@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             url += `?data=${dataFiltrada}`;
         }
 
-        tabelaCorpo.innerHTML = '<tr><td colspan="9">Carregando agendamentos...</td></tr>';
+        tabelaCorpo.innerHTML = '<tr><td colspan="9" class="text-center py-4">Carregando agendamentos...</td></tr>';
 
         fetch(url)
             .then(response => response.json())
@@ -39,26 +39,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 tabelaCorpo.innerHTML = '';
 
                 if (agendamentos.length === 0) {
-                    tabelaCorpo.innerHTML = '<tr><td colspan="9">Nenhum agendamento encontrado.</td></tr>';
+                    tabelaCorpo.innerHTML = '<tr><td colspan="9" class="text-center text-muted py-4">Nenhum agendamento encontrado.</td></tr>';
                     return;
                 }
 
-                // --- PASSO 4: "DESENHAR" A TABELA ---
+                // --- PASSO 4: "DESENHAR" A TABELA MODERNA ---
                 agendamentos.forEach(ag => {
                     const tr = document.createElement('tr');
-                    tr.className = `status-linha-${ag.status.toLowerCase()}`;
+
+                    // Lógica para cor da etiqueta (Badge)
+                    let statusColorClass = "bg-warning text-dark"; // Padrão (ex: Pendente)
+                    if (ag.status.toLowerCase() === "agendado") statusColorClass = "bg-success";
+                    if (ag.status.toLowerCase() === "rejeitado") statusColorClass = "bg-danger";
+
                     tr.innerHTML = `
-                        <td>${ag.nome_usuario} (${ag.email_usuario})</td>
+                        <td class="fw-medium">${ag.nome_usuario}<br><small class="text-muted fw-normal">${ag.email_usuario}</small></td>
                         <td>${ag.tipo_reserva}</td>
                         <td>${ag.sala || 'N/A'}</td>
-                        <td>${ag.data} (${ag.horario_inicio} - ${ag.horario_fim})</td>
+                        <td>${ag.data}<br><small class="text-muted">${ag.horario_inicio} - ${ag.horario_fim}</small></td>
                         <td>${ag.finalidade}</td>
                         <td>${ag.solicitacoes || 'Nenhuma'}</td>
-                        <td>${ag.observacao_admin || ''}</td>
-                        <td><span class="status-texto-${ag.status.toLowerCase()}">${ag.status}</span></td>
+                        <td style="max-width: 150px;" class="text-truncate" title="${ag.observacao_admin || ''}">${ag.observacao_admin || ''}</td>
+                        
+                        <!-- Coluna de Status com Badges -->
                         <td>
-                            <button class="btn-acao btn-rejeitar" data-id="${ag.id}">Rejeitar</button>
-                            <button class="btn-acao btn-finalizar" data-id="${ag.id}">Finalizar</button>
+                            <span class="badge ${statusColorClass} px-2 py-1 rounded-pill shadow-sm">
+                                ${ag.status}
+                            </span>
+                        </td>
+                        
+                        <!-- Coluna de Ações com Botões Modernos -->
+                        <td class="text-center">
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button class="btn btn-outline-danger btn-sm fw-bold rounded-pill btn-rejeitar" data-id="${ag.id}" title="Rejeitar">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                                <button class="btn btn-outline-success btn-sm fw-bold rounded-pill btn-finalizar" data-id="${ag.id}" title="Finalizar/Aprovar">
+                                    <i class="bi bi-check-lg"></i>
+                                </button>
+                            </div>
                         </td>
                     `;
                     tabelaCorpo.appendChild(tr);
@@ -66,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .catch(error => {
                 console.error('Erro ao buscar agendamentos:', error);
-                tabelaCorpo.innerHTML = '<tr><td colspan="9">Erro ao carregar dados.</td></tr>';
+                tabelaCorpo.innerHTML = '<tr><td colspan="9" class="text-center text-danger py-4">Erro ao carregar dados.</td></tr>';
             });
     }
 
@@ -78,20 +97,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- PASSO 6: "OUVIR" OS CLIQUES NOS BOTÕES DE AÇÃO ---
     tabelaCorpo.addEventListener('click', function (event) {
-        const elementoClicado = event.target;
-        const idAgendamento = elementoClicado.getAttribute('data-id');
+        // Usamos closest() para garantir que pegamos o clique no botão, mesmo se o usuário clicar em cima do ícone <i>
+        const btnRejeitar = event.target.closest('.btn-rejeitar');
+        const btnFinalizar = event.target.closest('.btn-finalizar');
 
         // Se o botão clicado foi o de REJEITAR
-        if (elementoClicado.classList.contains('btn-rejeitar')) {
+        if (btnRejeitar) {
+            const idAgendamento = btnRejeitar.getAttribute('data-id');
             if (confirm(`Tem certeza que deseja REJEITAR o agendamento ${idAgendamento}?`)) {
                 atualizarStatus(idAgendamento, 'Rejeitado', 'Rejeitado pelo administrador.');
             }
         }
 
         // Se o botão clicado foi o de FINALIZAR
-        if (elementoClicado.classList.contains('btn-finalizar')) {
+        if (btnFinalizar) {
+            const idAgendamento = btnFinalizar.getAttribute('data-id');
             let obs = prompt("Adicionar observação (ex: 'Projetor quebrou')? (Opcional)");
-            atualizarStatus(idAgendamento, 'Finalizado', obs || '');
+            // Se o usuário cancelar o prompt, retorna null, vamos manter vazio
+            if (obs !== null) {
+                atualizarStatus(idAgendamento, 'Finalizado', obs || '');
+            }
         }
     });
 

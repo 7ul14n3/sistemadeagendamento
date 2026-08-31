@@ -1,0 +1,68 @@
+/* ==========================================================================
+   MODO ESCURO - ADMIN E TABELAS (FORÇANDO VARIÁVEIS DO BOOTSTRAP)
+   ========================================================================== */
+
+/* 1. Remove o fundo branco padrão para o glassmorphism funcionar */
+.table {
+    background-color: transparent !important;
+    --bs-table-bg: transparent;
+}
+
+/* 2. Força a cor do texto e fundo da tabela no Alto Contraste */
+body.alto-contraste .table {
+    --bs-table-color: #f8fafc;
+    --bs-table-hover-color: #ffffff;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.08);
+    color: #f8fafc !important;
+}
+
+/* 3. Garante que apenas as linhas de dados (td) fiquem translúcidas */
+body.alto-contraste .table td {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #f8fafc !important;
+}
+
+/* NOVO: Devolve o fundo preto para o cabeçalho (th) da tabela */
+body.alto-contraste .table th {
+    background-color: #000000 !important;
+    /* Azul super escuro/preto para combinar com o tema */
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+}
+
+/* 4. Corrige a cor dos textos pequenos (emails e horas que o JS gera como text-muted) */
+body.alto-contraste .table .text-muted {
+    color: #94a3b8 !important;
+}
+
+/* 5. Força o Card gigante de fundo da tabela a escurecer */
+body.alto-contraste #secao-tabela {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+/* 6. Clareia o título "Agendamentos Encontrados" e a borda de separação */
+body.alto-contraste .card-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.alto-contraste .card-header .text-secondary {
+    color: #cbd5e1 !important;
+}
+
+/* ==========================================================================
+   ESTILOS PARA OS QUADRADINHOS DE ESTATÍSTICAS
+   ========================================================================== */
+body.alto-contraste .stat-card {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.alto-contraste .stat-card span.text-secondary {
+    color: #e2e8f0 !important;
+}
+
+body.alto-contraste .stat-card i.text-primary {
+    color: #60a5fa !important;
+}
