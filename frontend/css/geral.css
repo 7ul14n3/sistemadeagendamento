@@ -277,3 +277,189 @@ body.fonte-media h1,
 body.fonte-grande h1 {
     font-size: 2rem !important;
 }
+
+/* ==========================================================================
+   ESTILIZAÇÃO DOS INPUTS NO MODO ESCURO (ALTO CONTRASTE)
+   ========================================================================== */
+body.alto-contraste input,
+body.alto-contraste select,
+body.alto-contraste textarea,
+body.alto-contraste .form-control,
+body.alto-contraste .form-select {
+    background-color: rgba(15, 23, 42, 0.75) !important; /* Fundo escuro azulado translúcido */
+    color: #f8fafc !important;                          /* Texto digitado em branco/cinza claro */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;/* Borda sutil legível */
+    border-radius: var(--radius-md) !important;
+}
+
+/* Cor do texto de exemplo (Placeholder) */
+body.alto-contraste input::placeholder,
+body.alto-contraste textarea::placeholder {
+    color: #94a3b8 !important; /* Cinza claro suave */
+    opacity: 1 !important;
+}
+
+/* Efeito ao clicar no campo para digitar (Focus) */
+body.alto-contraste input:focus,
+body.alto-contraste select:focus,
+body.alto-contraste textarea:focus {
+    background-color: rgba(15, 23, 42, 0.95) !important;
+    border-color: #3b82f6 !important;                     /* Borda azul destacada */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important; /* Brilho neon sutil */
+    color: #ffffff !important;
+    outline: none !important;
+}
+
+/* Clareia os ícones nativos do sistema (relógio, calendário e seta do select) */
+body.alto-contraste input::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.8);
+}
+
+body.alto-contraste select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23f8fafc'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+}
+
+/* ==========================================================================
+   CORREÇÃO COMPLETA DO CALENDÁRIO (FLATPICKR)
+   ========================================================================== */
+
+/* 1. MODO CLARO (PADRÃO) - Cores dos dias e cabeçalho legíveis */
+.flatpickr-calendar {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.flatpickr-day {
+    color: #0f172a !important; /* Dias em preto/cinza escuro */
+}
+
+.flatpickr-day.flatpickr-disabled, 
+.flatpickr-day.prevMonthDay, 
+.flatpickr-day.nextMonthDay {
+    color: #cbd5e1 !important; /* Dias de outros meses em cinza claro */
+}
+
+.flatpickr-current-month,
+.flatpickr-month,
+.flatpickr-weekday {
+    color: #0f172a !important; /* Cabeçalho e dias da semana bem legíveis */
+    fill: #0f172a !important;
+}
+
+/* 2. MODO ESCURO / ALTO CONTRASTE */
+body.alto-contraste .flatpickr-calendar {
+    background: #0f172a !important; /* Fundo do popup azul bem escuro */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8) !important;
+}
+
+body.alto-contraste .flatpickr-day {
+    color: #f8fafc !important; /* Números dos dias em branco */
+}
+
+body.alto-contraste .flatpickr-day:hover {
+    background: #2563eb !important;
+    color: #ffffff !important;
+}
+
+body.alto-contraste .flatpickr-day.selected {
+    background: #3b82f6 !important;
+    color: #ffffff !important;
+    border-color: #3b82f6 !important;
+}
+
+body.alto-contraste .flatpickr-day.flatpickr-disabled, 
+body.alto-contraste .flatpickr-day.prevMonthDay, 
+body.alto-contraste .flatpickr-day.nextMonthDay {
+    color: #475569 !important; /* Dias fora do mês em tom apagado */
+}
+
+/* Cabeçalho, Setas e Seletores no Modo Escuro */
+body.alto-contraste .flatpickr-current-month,
+body.alto-contraste .flatpickr-month,
+body.alto-contraste span.flatpickr-weekday,
+body.alto-contraste .flatpickr-current-month .flatpickr-monthDropdown-months,
+body.alto-contraste .flatpickr-current-month input.cur-year {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+    background: transparent !important;
+}
+
+/* Ajusta o fundo e cor dos botões dropdown de mês e ano dentro do topo */
+body.alto-contraste .flatpickr-current-month .flatpickr-monthDropdown-months option {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+}
+
+body.alto-contraste .flatpickr-months .flatpickr-prev-month, 
+body.alto-contraste .flatpickr-months .flatpickr-next-month {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+}
+
+/* ==========================================================================
+   AJUSTE DO ÍCONE E INPUT GROUP (MODO ESCURO)
+   ========================================================================== */
+
+/* Escurece o quadrado do ícone e remove a borda branca */
+body.alto-contraste .input-group-text {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: #f8fafc !important;
+}
+
+/* Garante que qualquer ícone (SVG ou Font) fique claro */
+body.alto-contraste .input-group-text i,
+body.alto-contraste .input-group-text svg,
+body.alto-contraste .input-group-text img {
+    color: #f8fafc !important;
+    fill: #f8fafc !important;
+    filter: brightness(0) invert(1); /* Inverte imagens/SVGs para branco */
+}
+
+/* ==========================================================================
+   AJUSTE DE TEXTO DOS CARDS DE ORIENTAÇÃO (MODO ESCURO)
+   ========================================================================== */
+
+/* Força a cor clara nos textos de lista dentro dos cards no alto contraste */
+body.alto-contraste .container-cadastro ul li span,
+body.alto-contraste .container-cadastro .text-muted {
+    color: #cbd5e1 !important; /* Cinza claro azulado com alto contraste */
+}
+
+/* Opcional: Garante que os ícones fiquem com cores bem vivas */
+body.alto-contraste .container-cadastro ul li i.text-success {
+    color: #4ade80 !important; /* Verde claro */
+}
+
+body.alto-contraste .container-cadastro ul li i.text-warning {
+    color: #facc15 !important; /* Amarelo vivo */
+}
+
+body.alto-contraste .container-cadastro ul li i.text-primary {
+    color: #60a5fa !important; /* Azul claro */
+}
+
+/* ==========================================================================
+   CORREÇÃO DO SELECTOR DE HORA (INPUT TYPE="TIME") - MODO ESCURO
+   ========================================================================== */
+
+/* Força o tema escuro no pop-up de seleção de hora */
+body.alto-contraste input[type="time"] {
+    color-scheme: dark !important;
+}
+
+/* Garante o fundo escuro e borda sutil no elemento em foco */
+body.alto-contraste input[type="time"]:focus {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Ajusta a cor do ícone de relógio interno para branco */
+body.alto-contraste input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.2) !important;
+    cursor: pointer !important;
+}
