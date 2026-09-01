@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reserva de Sala</title>
+  <title>Reserva de Sala - AgendDev</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
@@ -25,17 +25,18 @@
     <button id="alternar-contraste" class="btn btn-sm btn-outline-light"><i class="bi bi-circle-half"></i></button>
   </div>
 
-  <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
+  <div class="container-fluid px-lg-5 py-4">
+    <div class="row g-4 align-items-start justify-content-center">
 
-        <div class="container-cadastro p-4">
+      <!-- COLUNA DA ESQUERDA: Formulário de Reserva -->
+      <div class="col-12 col-lg-5 col-xl-4">
+        <div class="container-cadastro p-4 mx-auto" style="max-width: 100%;">
           <h1 class="text-center mb-4" id="titulo-pagina">Reserva de Sala</h1>
 
           <form id="form-reserva">
 
             <div class="form-group mb-3">
-              <label for="tipo-reserva" class="form-label">Tipo de Reserva:</label>
+              <label for="tipo-reserva" class="form-label fw-medium">Tipo de Reserva:</label>
               <select id="tipo-reserva" name="tipo-reserva" class="form-select" required>
                 <option value="">Selecione...</option>
                 <option value="Auditório - Sede">Auditório - Sede</option>
@@ -45,7 +46,7 @@
             </div>
 
             <div class="form-group mb-3">
-              <label for="sala" class="form-label">Sala:</label>
+              <label for="sala" class="form-label fw-medium">Sala:</label>
               <select id="sala" name="sala" class="form-select" required>
                 <option value="">Selecione uma sala...</option>
                 <option value="Sala 1">Sala 1</option>
@@ -54,7 +55,7 @@
             </div>
 
             <div class="form-group mb-3">
-              <label for="data" class="form-label">Data:</label>
+              <label for="data" class="form-label fw-medium">Data:</label>
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                 <input type="text" id="data" name="data" class="form-control" placeholder="Selecione a data..."
@@ -65,43 +66,78 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group mb-3">
-                  <label for="horario-inicio" class="form-label">Horário de Início:</label>
+                  <label for="horario-inicio" class="form-label fw-medium">Horário de Início:</label>
                   <input type="time" id="horario-inicio" name="horario-inicio" class="form-control" required />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group mb-3">
-                  <label for="horario-fim" class="form-label">Horário de Fim:</label>
+                  <label for="horario-fim" class="form-label fw-medium">Horário de Fim:</label>
                   <input type="time" id="horario-fim" name="horario-fim" class="form-control" required />
                 </div>
               </div>
             </div>
 
             <div class="form-group mb-3">
-              <label for="materiais" class="form-label">Solicitação de Materiais:</label>
+              <label for="materiais" class="form-label fw-medium">Solicitação de Materiais:</label>
               <textarea id="materiais" name="materiais" class="form-control" rows="3"
                 placeholder="Ex: Projetor, Microfone..."></textarea>
             </div>
 
             <div class="form-group mb-3">
-              <label for="finalidade" class="form-label">Finalidade:</label>
+              <label for="finalidade" class="form-label fw-medium">Finalidade:</label>
               <input type="text" id="finalidade" name="finalidade" class="form-control"
                 placeholder="Informe a finalidade da reserva" />
             </div>
 
             <div class="botoes-acao mt-4">
-              <button type="submit" id="botao-enviar" class="btn btn-primary w-100">Enviar Reserva</button>
+              <button type="submit" id="botao-enviar" class="btn btn-primary w-100 py-2 fw-semibold">Enviar Reserva</button>
             </div>
 
           </form>
         </div>
+      </div>
 
-        <section id="historico-agendamentos" class="mt-5">
-          <h3 class="text-center mb-3">Histórico de Agendamentos</h3>
-          <div id="lista-agendamentos" class="list-group"></div>
-        </section>
+      <!-- COLUNA DA DIREITA: Informações e Histórico -->
+      <div class="col-12 col-lg-7 col-xl-6">
+        
+        <!-- CARD 1: Diretrizes e Lembretes -->
+        <div class="container-cadastro p-4 mb-4 text-start" style="max-width: 100%;">
+          <h4 class="fw-bold mb-3 d-flex align-items-center gap-2" style="font-size: 1.2rem;">
+            <i class="bi bi-info-circle text-primary"></i> Orientações para Solicitantes
+          </h4>
+          <ul class="list-unstyled mb-0 d-flex flex-column gap-2 text-muted small">
+            <li class="d-flex align-items-start gap-2">
+              <i class="bi bi-check-circle-fill text-success mt-1"></i>
+              <span>Todas as solicitações passam por análise prévia da administração.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2">
+              <i class="bi bi-clock-fill text-warning mt-1"></i>
+              <span>Certifique-se de incluir a preparação do ambiente no intervalo de horário.</span>
+            </li>
+            <li class="d-flex align-items-start gap-2">
+              <i class="bi bi-tools text-primary mt-1"></i>
+              <span>Materiais específicos devem ser detalhados no campo correspondente para validação técnica.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CARD 2: Histórico de Agendamentos -->
+        <div class="container-cadastro p-4 text-start" style="max-width: 100%;">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="h5 mb-0 fw-bold d-flex align-items-center gap-2">
+              <i class="bi bi-clock-history text-primary"></i> Meus Agendamentos
+            </h3>
+            <span class="badge bg-primary rounded-pill px-3 py-2">Atualizado</span>
+          </div>
+          
+          <div id="lista-agendamentos" class="list-group list-group-flush">
+            <!-- Seu script reserva.js vai renderizar os itens aqui dentro -->
+          </div>
+        </div>
 
       </div>
+
     </div>
   </div>
 
