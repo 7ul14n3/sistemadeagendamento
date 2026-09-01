@@ -45,3 +45,12 @@ body.alto-contraste .backdrop-blur strong {
 body.alto-contraste .backdrop-blur small {
     color: #94a3b8 !important;
 }
+
+/* ==========================================================================
+   CORREÇÃO DO RODAPÉ (MODO ESCURO)
+   ========================================================================== */
+body.alto-contraste footer,
+body.alto-contraste footer p,
+body.alto-contraste footer .text-muted {
+    color: #94a3b8 !important; /* Cinza claro azulado com boa leitura */
+}
