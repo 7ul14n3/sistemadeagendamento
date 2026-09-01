@@ -25,10 +25,12 @@ body.alto-contraste .table td {
 
 /* NOVO: Devolve o fundo preto para o cabeçalho (th) da tabela */
 body.alto-contraste .table th {
-    background-color: #000000 !important;
-    /* Azul super escuro/preto para combinar com o tema */
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
+    background-color: rgba(30, 41, 59, 0.85) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f8fafc !important;
+    font-weight: 600;
 }
 
 /* 4. Corrige a cor dos textos pequenos (emails e horas que o JS gera como text-muted) */
@@ -65,4 +67,261 @@ body.alto-contraste .stat-card span.text-secondary {
 
 body.alto-contraste .stat-card i.text-primary {
     color: #60a5fa !important;
+}
+
+/* ==========================================================================
+   CORREÇÃO DE TEXTOS GENÉRICOS E TÍTULOS - ALTO CONTRASTE
+   ========================================================================== */
+
+/* 1. Força o título principal (Gerenciamento de Agendamentos) a ficar visível */
+body.alto-contraste h1,
+body.alto-contraste h2,
+body.alto-contraste h3,
+body.alto-contraste .h1,
+body.alto-contraste .h2,
+body.alto-contraste .h3 {
+    color: #60a5fa !important; /* Azul claro/neon para destacar no fundo escuro */
+}
+
+/* 2. Corrige o texto "ESPAÇOS MAIS REQUISITADOS" e outros títulos de seções */
+body.alto-contraste h4,
+body.alto-contraste h5,
+body.alto-contraste h6,
+body.alto-contraste .h4,
+body.alto-contraste .h5,
+body.alto-contraste .h6 {
+    color: #94a3b8 !important; /* Cinza claro azulado */
+}
+
+/* 3. Sobrescreve as classes utilitárias do Bootstrap para textos escuros/apagados */
+body.alto-contraste .text-secondary,
+body.alto-contraste .text-muted,
+body.alto-contraste .text-dark,
+body.alto-contraste label,
+body.alto-contraste span:not(.badge) {
+    color: #cbd5e1 !important; /* Força textos como "Novo Usuário?" a ficarem legíveis */
+}
+
+/* 4. Garante que textos com a cor azul primária do Bootstrap fiquem legíveis no escuro */
+body.alto-contraste .text-primary {
+    color: #60a5fa !important;
+}
+
+/* ==========================================================================
+   AJUSTE DO INPUT DE DATA NO PAINEL ADMIN (MODO ESCURO)
+   ========================================================================== */
+
+/* Escurece a caixa de texto de data do filtro */
+body.alto-contraste #filtro-data,
+body.alto-contraste input[type="date"],
+body.alto-contraste input[type="text"][placeholder*="dd/mm"],
+body.alto-contraste .form-control {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Garante que o placeholder (dd/mm/aaaa) fique com cor legível */
+body.alto-contraste #filtro-data::placeholder,
+body.alto-contraste input[type="date"]::placeholder,
+body.alto-contraste .form-control::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+
+/* Inverte o ícone do calendário para ficar branco */
+body.alto-contraste input::-webkit-calendar-picker-indicator {
+    filter: invert(1) !important;
+    cursor: pointer !important;
+}
+
+/* ==========================================================================
+   ALINHAMENTO E PADRONIZAÇÃO DO TOPO (FILTROS E BOTÕES)
+   ========================================================================== */
+
+/* Padroniza altura, borda e alinhamento dos elementos de filtro */
+#secao-filtro input,
+#secao-filtro .form-control,
+#campo-data-filtro,
+#btn-filtrar,
+#secao-filtro .btn {
+    height: 42px !important;
+    border-radius: 10px !important; /* Mesma curvatura para todos */
+    font-size: 0.95rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+}
+
+/* Ajusta o contêiner flex do topo para alinhar tudo na mesma linha vertical */
+#secao-filtro .d-flex,
+.area-filtro-topo {
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* Ajusta especificamente o botão Cadastrar para ter a mesma altura */
+.btn-cadastrar,
+a[href*="cadastro"],
+.area-filtro-topo .btn-success {
+    height: 42px !important;
+    border-radius: 10px !important;
+    padding: 0 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+}
+
+/* ==========================================================================
+   ESTILIZAÇÃO IDEAL DO CALENDÁRIO POP-UP NATIVO (MODO ESCURO)
+   ========================================================================== */
+
+/* 1. Inverte o tema do pop-up nativo do navegador para escuro */
+body.alto-contraste input[type="date"] {
+    color-scheme: dark !important;
+}
+
+/* 2. Aplica fundo escuro e borda neon no input quando o calendário estiver aberto */
+body.alto-contraste input[type="date"]:focus {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* 3. Ajusta o ícone de calendário interno do campo para ficar bem destacado */
+body.alto-contraste input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.2) !important;
+    cursor: pointer !important;
+    opacity: 0.9;
+    transition: transform 0.2s ease;
+}
+
+body.alto-contraste input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+/* ==========================================================================
+   CABECALHO DA TABELA - MODO CLARO E MODO ESCURO
+   ========================================================================== */
+
+/* 1. Modo Claro (Padrão): fundo cinza claro sutil e texto escuro */
+.table th {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    font-weight: 600;
+}
+
+/* 2. Modo Escuro (Alto Contraste): fundo escuro azulado e texto claro */
+body.alto-contraste .table th {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+    color: #f8fafc !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+/* ==========================================================================
+   AJUSTE DE INPUTS, SELECTS E TEXTAREAS (MODO ESCURO)
+   ========================================================================== */
+
+/* Escurece inputs, selects e textareas */
+body.alto-contraste #campo-data-filtro,
+body.alto-contraste input[type="date"],
+body.alto-contraste input[type="text"],
+body.alto-contraste input[type="time"],
+body.alto-contraste select.form-select,
+body.alto-contraste textarea.form-control,
+body.alto-contraste .form-control {
+    background-color: rgba(15, 23, 42, 0.75) !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Placeholders legíveis */
+body.alto-contraste .form-control::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1 !important;
+}
+
+/* ==========================================================================
+   ALINHAMENTO E PADRONIZAÇÃO DO TOPO (FILTROS E BOTÕES)
+   ========================================================================== */
+
+/* Padroniza apenas os elementos do filtro superior */
+#secao-filtro #campo-data-filtro,
+#secao-filtro #btn-filtrar,
+#secao-filtro .btn-cadastrar {
+    height: 42px !important;
+    border-radius: 10px !important;
+    font-size: 0.95rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Ajusta o input-group para manter os cantos encaixados no botão de filtro */
+#secao-filtro .input-group #campo-data-filtro {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+#secao-filtro .input-group #btn-filtrar {
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+/* ==========================================================================
+   ESTILIZAÇÃO IDEAL DO CALENDÁRIO POP-UP NATIVO E INPUT TIME (MODO ESCURO)
+   ========================================================================== */
+
+/* Pop-ups nativos escuros */
+body.alto-contraste input[type="date"],
+body.alto-contraste input[type="time"] {
+    color-scheme: dark !important;
+}
+
+/* Foco nos campos de data e hora */
+body.alto-contraste input[type="date"]:focus,
+body.alto-contraste input[type="time"]:focus {
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Ícones dos relógios e calendários nativos */
+body.alto-contraste input::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.2) !important;
+    cursor: pointer !important;
+    opacity: 0.9;
+    transition: transform 0.2s ease;
+}
+
+body.alto-contraste input::-webkit-calendar-picker-indicator:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+/* ==========================================================================
+   CABEÇALHO DA TABELA - MODO CLARO E MODO ESCURO
+   ========================================================================== */
+
+/* 1. Modo Claro (Padrão): fundo cinza claro sutil e texto escuro */
+.table th {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    border-bottom: 2px solid #e2e8f0 !important;
+    font-weight: 600;
+}
+
+/* 2. Modo Escuro (Alto Contraste): fundo escuro azulado e texto claro */
+body.alto-contraste .table th {
+    background-color: rgba(30, 41, 59, 0.85) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.15) !important;
+    color: #f8fafc !important;
 }
